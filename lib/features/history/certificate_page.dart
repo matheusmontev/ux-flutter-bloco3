@@ -82,7 +82,7 @@ class CertificatePage extends StatelessWidget {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        'Documento de demonstração, sem validade acadêmica.',
+                        certificateDisclaimer,
                         style: theme.textTheme.bodySmall,
                       ),
                     ],
@@ -93,11 +93,8 @@ class CertificatePage extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           FilledButton.icon(
-            onPressed: () => _copy(
-              context,
-              '$text\nCódigo: $code\n'
-              'Documento de demonstração, sem validade acadêmica.',
-            ),
+            onPressed: () =>
+                _copy(context, certificateShareText(profile, activity)),
             icon: const Icon(Icons.copy),
             label: const Text('Copiar texto'),
           ),

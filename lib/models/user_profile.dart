@@ -36,9 +36,16 @@ class UserProfile {
   final String institution;
   final String link;
 
+  /// Forma usada para guardar e comparar e-mails.
+  static String normalizeEmail(String email) => email.trim().toLowerCase();
+
+  bool hasEmail(String other) => normalizeEmail(email) == normalizeEmail(other);
+
+  String get initials => initialsOf(name);
+
   /// Primeira letra do primeiro e do último nome, sem contar sufixos.
   /// Usa caracteres completos, para não cortar um emoji ao meio.
-  String get initials {
+  static String initialsOf(String name) {
     final all = name.split(RegExp(r'\s+')).where((w) => w.isNotEmpty).toList();
     if (all.isEmpty) return '?';
     final named = all.where(_hasLetter.hasMatch).toList();
