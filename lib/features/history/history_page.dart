@@ -5,6 +5,7 @@ import '../../core/formatters.dart';
 import '../../widgets/empty_state.dart';
 import '../../widgets/hours_chart.dart';
 import '../../widgets/page_body.dart';
+import '../../widgets/two_pane.dart';
 import 'certificate_page.dart';
 
 /// Histórico de presença, resumo por tema e acesso aos certificados.
@@ -36,8 +37,9 @@ class HistoryPage extends StatelessWidget {
       );
     }
 
-    return PageBody(
-      children: [
+    return TwoPane(
+      sideWidth: 420,
+      side: [
         Text(
           '${attended.length} ${attended.length == 1 ? 'presença' : 'presenças'}'
           ' · ${formatHours(state.attendedHours)}',
@@ -61,6 +63,8 @@ class HistoryPage extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 24),
+      ],
+      main: [
         Text('Certificados', style: theme.textTheme.titleMedium),
         const SizedBox(height: 12),
         for (final activity in attended)
