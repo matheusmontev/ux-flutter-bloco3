@@ -4,21 +4,24 @@ import 'package:material_ui/material_ui.dart';
 const appFont = 'Atkinson Hyperlegible';
 
 const _ink = Color(0xFF14213D);
-const _blue = Color(0xFF006FA8);
-const _signal = Color(0xFFF2A900);
+const brandBlue = Color(0xFF006FA8);
+const brandAmber = Color(0xFFF2A900);
 const _paper = Color(0xFFF7F9F9);
 
 ColorScheme _colors(Brightness brightness) {
-  final base = ColorScheme.fromSeed(seedColor: _blue, brightness: brightness);
+  final base = ColorScheme.fromSeed(
+    seedColor: brandBlue,
+    brightness: brightness,
+  );
   if (brightness == Brightness.light) {
     return base.copyWith(
-      primary: _blue,
+      primary: brandBlue,
       onPrimary: Colors.white,
       primaryContainer: const Color(0xFFCDE9F7),
       onPrimaryContainer: _ink,
       secondaryContainer: const Color(0xFFDCE7EA),
       onSecondaryContainer: _ink,
-      tertiary: _signal,
+      tertiary: brandAmber,
       onTertiary: _ink,
       surface: _paper,
       onSurface: _ink,

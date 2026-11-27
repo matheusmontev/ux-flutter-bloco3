@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 import '../core/formatters.dart';
+import '../core/theme.dart';
 import '../models/activity.dart';
 
 /// Soma a carga horária por tema, da maior para a menor.
@@ -30,7 +31,7 @@ class HoursChart extends StatelessWidget {
 
     // Tons conferidos quanto ao contraste com o fundo de cada tema.
     final color = Theme.of(context).brightness == Brightness.light
-        ? const Color(0xFF006FA8)
+        ? brandBlue
         : const Color(0xFF0099B0);
     final max = totals.first.total.inMinutes;
 
