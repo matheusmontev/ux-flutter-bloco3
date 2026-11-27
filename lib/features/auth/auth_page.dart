@@ -1,9 +1,10 @@
 import 'package:material_ui/material_ui.dart';
 
 import '../../core/app_state.dart';
+import '../../core/formatters.dart';
+import '../../core/schedule_filter.dart';
 import '../../core/validators.dart';
 import '../../data/mock_data.dart';
-import '../../widgets/page_body.dart';
 import '../../widgets/two_pane.dart';
 
 /// Entrada e cadastro do participante.
@@ -42,16 +43,23 @@ class _AuthPageState extends State<AuthPage> {
       body: LayoutBuilder(
         builder: (context, constraints) {
           if (constraints.maxWidth < TwoPane.breakpoint) {
-            return SafeArea(
-              child: PageBody(
-                maxWidth: 420,
-                children: [
-                  const SizedBox(height: 24),
-                  const _Header(),
-                  const SizedBox(height: 24),
-                  ..._formContent(context),
-                ],
-              ),
+            return ListView(
+              padding: EdgeInsets.zero,
+              children: [
+                const _EventBand(),
+                Center(
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 452),
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 24, 16, 32),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: _formContent(context),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             );
           }
           // No computador, o evento ocupa um painel ao lado do formulário.
@@ -156,35 +164,57 @@ class _AuthPageState extends State<AuthPage> {
   }
 }
 
-class _Header extends StatelessWidget {
-  const _Header({this.color});
-
-  /// Cor do texto e do ícone quando o cabeçalho fica sobre o painel.
-  final Color? color;
+/// Nome, datas e local do evento sobre a cor principal.
+class _EventTitle extends StatelessWidget {
+  const _EventTitle();
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Column(
-      children: [
-        Icon(
-          Icons.confirmation_number_outlined,
-          size: 64,
-          color: color ?? theme.colorScheme.primary,
+    final color = theme.colorScheme.onPrimary;
+    final first = activities.first.start;
+    final last = activities.last.start;
+    return DefaultTextStyle.merge(
+      style: TextStyle(color: color),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(Icons.confirmation_number_outlined, size: 40, color: color),
+          const SizedBox(height: 12),
+          Text(
+            eventName,
+            style: theme.textTheme.headlineMedium?.copyWith(
+              color: color,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          const SizedBox(height: 12),
+          Text(
+            '${first.day} a ${last.day} de ${formatMonthLong(last)}',
+            style: theme.textTheme.titleMedium?.copyWith(color: color),
+          ),
+          const Text(eventPlace),
+        ],
+      ),
+    );
+  }
+}
+
+class _EventBand extends StatelessWidget {
+  const _EventBand();
+
+  @override
+  Widget build(BuildContext context) {
+    return ColoredBox(
+      key: const Key('auth-event'),
+      color: Theme.of(context).colorScheme.primary,
+      child: const SafeArea(
+        bottom: false,
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(24, 32, 24, 28),
+          child: _EventTitle(),
         ),
-        const SizedBox(height: 16),
-        Text(
-          eventName,
-          style: theme.textTheme.headlineSmall?.copyWith(color: color),
-          textAlign: TextAlign.center,
-        ),
-        const SizedBox(height: 8),
-        Text(
-          'Programação, check-in, certificados e networking.',
-          style: TextStyle(color: color),
-          textAlign: TextAlign.center,
-        ),
-      ],
+      ),
     );
   }
 }
@@ -194,14 +224,49 @@ class _BrandPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = Theme.of(context).colorScheme;
+    final theme = Theme.of(context);
+    final color = theme.colorScheme.onPrimary;
     return ColoredBox(
       key: const Key('auth-brand'),
-      color: colors.primary,
+      color: theme.colorScheme.primary,
       child: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(48),
-          child: _Header(color: colors.onPrimary),
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 460),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const _EventTitle(),
+                const SizedBox(height: 32),
+                for (final MapEntry(key: day, value: items) in groupByDay(
+                  activities,
+                ).entries) ...[
+                  Divider(color: color.withValues(alpha: 0.35)),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          formatDayLong(day),
+                          style: theme.textTheme.titleMedium?.copyWith(
+                            color: color,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        Text(
+                          '${items.length} atividades, a partir das '
+                          '${formatTime(items.first.start)}',
+                          style: TextStyle(color: color),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ],
+            ),
+          ),
         ),
       ),
     );
