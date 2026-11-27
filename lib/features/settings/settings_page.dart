@@ -76,6 +76,8 @@ class SettingsPage extends StatelessWidget {
           ),
           const Divider(height: 40),
           const DownloadAppSection(),
+          Text('Conta', style: Theme.of(context).textTheme.titleMedium),
+          const SizedBox(height: 12),
           OutlinedButton.icon(
             onPressed: () => _signOut(context),
             icon: const Icon(Icons.logout),

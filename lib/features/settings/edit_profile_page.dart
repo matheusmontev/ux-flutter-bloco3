@@ -3,7 +3,9 @@ import 'package:material_ui/material_ui.dart';
 import '../../core/app_state.dart';
 import '../../core/validators.dart';
 import '../../models/user_profile.dart';
+import '../../widgets/badge_card.dart';
 import '../../widgets/page_body.dart';
+import 'profile_summary.dart';
 
 /// Edição dos dados do perfil, que também formam o cartão virtual.
 /// Devolve `true` ao fechar quando os dados foram salvos.
@@ -86,10 +88,27 @@ class _EditProfilePageState extends State<EditProfilePage> {
       appBar: AppBar(title: const Text('Editar perfil')),
       body: PageBody(
         children: [
-          Text('Conta: ${AppScope.of(context).profile?.email ?? ''}'),
-          const SizedBox(height: 4),
-          const Text('Estes dados aparecem no seu cartão virtual.'),
-          const SizedBox(height: 16),
+          // Mostra como o crachá fica antes de salvar.
+          ListenableBuilder(
+            key: const Key('preview'),
+            listenable: _name,
+            builder: (context, _) {
+              final email = AppScope.of(context).profile?.email ?? '';
+              final typed = _name.text.trim();
+              return BadgeCard(
+                header: ProfileBadgeHeader(
+                  initials: UserProfile(name: typed, email: email).initials,
+                  name: typed.isEmpty ? 'Seu nome' : typed,
+                  email: email,
+                ),
+                child: const Text(
+                  'Estes dados aparecem no seu cartão virtual.',
+                  textAlign: TextAlign.center,
+                ),
+              );
+            },
+          ),
+          const SizedBox(height: 20),
           Form(
             key: _formKey,
             child: Column(
