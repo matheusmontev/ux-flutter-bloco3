@@ -17,6 +17,9 @@ class EventosApp extends StatelessWidget {
       child: ListenableBuilder(
         listenable: state,
         builder: (context, _) => MaterialApp(
+          // Cada sessão tem a própria pilha de telas: ao entrar ou sair, as
+          // telas abertas antes são descartadas.
+          key: ValueKey(state.isLogged),
           title: appName,
           debugShowCheckedModeBanner: false,
           theme: buildTheme(Brightness.light),

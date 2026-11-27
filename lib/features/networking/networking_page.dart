@@ -31,10 +31,7 @@ class NetworkingPage extends StatelessWidget {
   }
 
   Future<void> _scan(BuildContext context) async {
-    final value = await Navigator.push<String>(
-      context,
-      MaterialPageRoute(builder: (_) => const ScannerPage()),
-    );
+    final value = await ScannerPage.read(context);
     if (value != null && context.mounted) await _add(context, value);
   }
 
@@ -80,8 +77,7 @@ class NetworkingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final state = AppScope.of(context);
     final theme = Theme.of(context);
-    final profile = state.profile;
-    if (profile == null) return const SizedBox.shrink();
+    final profile = state.sessionProfile;
 
     return TwoPane(
       sideWidth: 400,

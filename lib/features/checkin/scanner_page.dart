@@ -7,6 +7,12 @@ import '../../widgets/empty_state.dart';
 class ScannerPage extends StatefulWidget {
   const ScannerPage({super.key});
 
+  /// Devolve o texto lido, ou nulo se a pessoa voltar sem ler.
+  static Future<String?> read(BuildContext context) => Navigator.push<String>(
+    context,
+    MaterialPageRoute(builder: (_) => const ScannerPage()),
+  );
+
   @override
   State<ScannerPage> createState() => _ScannerPageState();
 }

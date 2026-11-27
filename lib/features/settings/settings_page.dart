@@ -23,7 +23,6 @@ class SettingsPage extends StatelessWidget {
 
   Future<void> _signOut(BuildContext context) async {
     final state = AppScope.of(context);
-    final navigator = Navigator.of(context);
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
@@ -42,7 +41,6 @@ class SettingsPage extends StatelessWidget {
       ),
     );
     if (confirmed != true) return;
-    navigator.popUntil((route) => route.isFirst);
     await state.signOut();
   }
 

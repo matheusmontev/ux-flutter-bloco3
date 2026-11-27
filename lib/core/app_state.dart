@@ -47,6 +47,10 @@ class AppState extends ChangeNotifier {
   final List<UserProfile> _contacts = [];
 
   UserProfile? get profile => _profile;
+
+  /// O perfil, para as telas que só existem com a sessão aberta.
+  UserProfile get sessionProfile =>
+      _profile ?? (throw StateError('Tela aberta sem sessão'));
   bool get isLogged => _logged && _profile != null;
   bool get darkMode => _darkMode;
   List<UserProfile> get contacts => List.unmodifiable(_contacts);

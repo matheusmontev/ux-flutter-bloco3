@@ -24,7 +24,7 @@ class CertificatePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final profile = AppScope.of(context).profile!;
+    final profile = AppScope.of(context).sessionProfile;
     final text = certificateText(profile, activity);
     final code = certificateCode(profile, activity);
 
