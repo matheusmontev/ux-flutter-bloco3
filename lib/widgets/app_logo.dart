@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 import '../core/app_info.dart';
+import '../core/theme.dart';
 
 /// Logo do aplicativo: um ingresso com o sinal de presença confirmada.
 /// A geometria é a mesma de `tool/gerar_icones.py`, que gera os ícones.
@@ -28,16 +29,13 @@ class AppLogo extends StatelessWidget {
 class _LogoPainter extends CustomPainter {
   const _LogoPainter();
 
-  static const _blue = Color(0xFF006FA8);
-  static const _amber = Color(0xFFF2A900);
-
   @override
   void paint(Canvas canvas, Size size) {
     canvas.scale(size.width, size.height);
     const ticket = Rect.fromLTRB(0.22, 0.16, 0.78, 0.84);
     const tear = 0.62;
     const notch = 0.055;
-    final blue = Paint()..color = _blue;
+    final blue = Paint()..color = brandBlue;
 
     canvas.drawRect(const Rect.fromLTWH(0, 0, 1, 1), blue);
 
@@ -48,7 +46,7 @@ class _LogoPainter extends CustomPainter {
     canvas.drawRect(ticket, Paint()..color = Colors.white);
     canvas.drawRect(
       const Rect.fromLTRB(0, tear, 1, 1),
-      Paint()..color = _amber,
+      Paint()..color = brandAmber,
     );
     canvas.restore();
 
@@ -69,7 +67,7 @@ class _LogoPainter extends CustomPainter {
         ..lineTo(0.47, 0.49)
         ..lineTo(0.65, 0.29),
       Paint()
-        ..color = _blue
+        ..color = brandBlue
         ..style = PaintingStyle.stroke
         ..strokeWidth = 0.075
         ..strokeCap = StrokeCap.round
