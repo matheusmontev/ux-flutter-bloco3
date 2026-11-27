@@ -65,10 +65,34 @@ class _CheckInPageState extends State<CheckInPage> {
             _ResultCard(result: result),
             const SizedBox(height: 24),
           ],
-          FilledButton.icon(
-            onPressed: _scan,
-            icon: const Icon(Icons.qr_code_scanner),
-            label: const Text('Ler com a câmera'),
+          Container(
+            key: const Key('scan-frame'),
+            padding: const EdgeInsets.all(24),
+            decoration: BoxDecoration(
+              color: theme.colorScheme.surfaceContainerLow,
+              border: Border.all(color: theme.colorScheme.primary, width: 2),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Icon(
+                  Icons.qr_code_2,
+                  size: 96,
+                  color: theme.colorScheme.primary,
+                ),
+                const SizedBox(height: 16),
+                FilledButton.icon(
+                  style: FilledButton.styleFrom(
+                    backgroundColor: theme.colorScheme.tertiary,
+                    foregroundColor: theme.colorScheme.onTertiary,
+                  ),
+                  onPressed: _scan,
+                  icon: const Icon(Icons.qr_code_scanner),
+                  label: const Text('Ler com a câmera'),
+                ),
+              ],
+            ),
           ),
           const SizedBox(height: 24),
           TextField(
@@ -86,26 +110,40 @@ class _CheckInPageState extends State<CheckInPage> {
             onPressed: () => _register(_code.text),
             child: const Text('Confirmar código'),
           ),
-          const Divider(height: 48),
-          Text('Modo demonstração', style: theme.textTheme.titleMedium),
-          const SizedBox(height: 4),
-          const Text(
-            'Recursos para apresentar o protótipo sem os cartazes do evento.',
-          ),
-          const SizedBox(height: 12),
-          if (activity != null)
-            TextButton.icon(
-              onPressed: () => _register(checkInCode(activity.id)),
-              icon: const Icon(Icons.play_circle_outline),
-              label: const Text('Simular leitura do QR Code'),
+          const SizedBox(height: 32),
+          Container(
+            key: const Key('demo-panel'),
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: theme.colorScheme.secondaryContainer,
+              borderRadius: BorderRadius.circular(12),
             ),
-          TextButton.icon(
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute<void>(builder: (_) => const DemoCodesPage()),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Modo demonstração', style: theme.textTheme.titleSmall),
+                const Text(
+                  'Para apresentar o protótipo sem os cartazes do evento.',
+                ),
+                const SizedBox(height: 8),
+                if (activity != null)
+                  TextButton.icon(
+                    onPressed: () => _register(checkInCode(activity.id)),
+                    icon: const Icon(Icons.play_circle_outline),
+                    label: const Text('Simular leitura do QR Code'),
+                  ),
+                TextButton.icon(
+                  onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (_) => const DemoCodesPage(),
+                    ),
+                  ),
+                  icon: const Icon(Icons.qr_code_2),
+                  label: const Text('Ver códigos de demonstração'),
+                ),
+              ],
             ),
-            icon: const Icon(Icons.qr_code_2),
-            label: const Text('Ver códigos de demonstração'),
           ),
         ],
       ),

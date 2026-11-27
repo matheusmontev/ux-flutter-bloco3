@@ -26,7 +26,8 @@ class DemoCodesPage extends StatelessWidget {
               child: ExpansionTile(
                 title: Text(activity.title),
                 subtitle: Text(
-                  '${formatDayShort(activity.start)} · '
+                  '${formatDayShort(activity.start)}, '
+                  '${formatTime(activity.start)}, '
                   '${checkInCode(activity.id)}',
                 ),
                 childrenPadding: const EdgeInsets.all(16),
