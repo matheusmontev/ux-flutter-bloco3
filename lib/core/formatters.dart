@@ -1,5 +1,3 @@
-import '../models/activity.dart';
-
 const _weekdays = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'];
 
 const _longWeekdays = [
@@ -45,9 +43,6 @@ String formatDate(DateTime date) =>
 
 String formatDayShort(DateTime date) =>
     '${_weekdays[date.weekday - 1]} ${_two(date.day)}/${_two(date.month)}';
-
-String formatTimeRange(Activity activity) =>
-    '${formatTime(activity.start)} às ${formatTime(activity.end)}';
 
 String formatHours(Duration duration) {
   final hours = duration.inHours;

@@ -31,7 +31,7 @@ flutter test
 flutter build web --release
 ```
 
-A cada pull request, o GitHub Actions executa a formatação de `lib`, a análise, os testes e o build web.
+A cada pull request, o GitHub Actions executa a formatação de `lib` e `test`, a análise, os testes e o build web.
 
 ## Publicar na Vercel
 
@@ -84,6 +84,15 @@ lib/
 | `test/core_test.dart` | Filtros, códigos QR, validações, certificado e formatação |
 | `test/app_state_test.dart` | Check-in, contatos, sessão, persistência, troca de conta e dados corrompidos |
 | `test/widget_test.dart` | Login, cadastro, estado vazio, check-in até o certificado, saída e layout em 320, 390 e 1280 px |
+| `test/regras_dominio_test.dart`, `test/names_test.dart` | Comparação de e-mails, iniciais e textos |
+| `test/agenda_test.dart`, `test/hours_chart_test.dart`, `test/ticket_test.dart`, `test/componentes_test.dart` | Componentes: agenda, gráfico de horas, ingresso e itens compartilhados |
+| `test/abas_test.dart`, `test/convencoes_telas_test.dart` | Navegação por abas, leitor de QR Code e telas ao entrar e sair |
+| `test/desktop_*_test.dart`, `test/layout_largura_test.dart` | Layout no computador e na passagem de uma para duas colunas |
+| `test/redesign_*_test.dart`, `test/profile_test.dart` | Telas, perfil e edição |
+| `test/theme_test.dart`, `test/cores_marca_test.dart`, `test/identidade_app_test.dart` | Tema, contraste, cores, nome e logo |
+| `test/download_app_test.dart`, `test/deploy_config_test.dart` | Download do app e configuração de publicação |
+
+A pasta `test/support/` reúne a preparação comum, como a criação do `AppState`.
 
 ## Verificações manuais
 
