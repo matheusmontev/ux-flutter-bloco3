@@ -95,3 +95,9 @@ Preencher somente depois de executar cada item.
 - O certificado é uma demonstração, sem validade e sem exportação em PDF.
 - Os contatos são compartilhados pelo QR Code ou pelo código copiado.
 - A versão para Android não foi compilada nem testada.
+
+## Identidade visual
+
+- Cores: tinta `#14213D`, azul `#006FA8`, âmbar `#F2A900` (check-in) e fundo `#F7F9F9`. O tema escuro tem tons próprios.
+- Fonte: Atkinson Hyperlegible, do Braille Institute, sob a SIL Open Font License (`assets/fonts/OFL.txt`).
+- `test/theme_test.dart` confere o contraste mínimo de 4,5:1 nos principais pares de cores.
