@@ -1,6 +1,8 @@
 import 'package:material_ui/material_ui.dart';
 
 import '../../widgets/empty_state.dart';
+import '../home/home_page.dart';
+import '../settings/settings_page.dart';
 
 class _Destination {
   const _Destination(this.label, this.icon, this.selectedIcon, this.page);
@@ -18,7 +20,7 @@ const _pending = EmptyState(
 );
 
 const _destinations = [
-  _Destination('Início', Icons.home_outlined, Icons.home, _pending),
+  _Destination('Início', Icons.home_outlined, Icons.home, SizedBox()),
   _Destination(
     'Programação',
     Icons.event_note_outlined,
@@ -45,10 +47,25 @@ class _HomeShellState extends State<HomeShell> {
   @override
   Widget build(BuildContext context) {
     final wide = MediaQuery.sizeOf(context).width >= 840;
-    final body = _destinations[_index].page;
+    // A aba inicial precisa trocar de aba, por isso é criada aqui.
+    final body = _index == 0
+        ? HomePage(onOpenTab: _select)
+        : _destinations[_index].page;
 
     return Scaffold(
-      appBar: AppBar(title: Text(_destinations[_index].label)),
+      appBar: AppBar(
+        title: Text(_destinations[_index].label),
+        actions: [
+          IconButton(
+            tooltip: 'Configurações',
+            icon: const Icon(Icons.settings_outlined),
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute<void>(builder: (_) => const SettingsPage()),
+            ),
+          ),
+        ],
+      ),
       body: wide
           ? Row(
               children: [
