@@ -1,10 +1,15 @@
 /// Validações dos formulários. Devolvem a mensagem de erro ou nulo.
 library;
 
+import 'package:characters/characters.dart';
+
 final _email = RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$');
 
+/// Aceita nomes curtos, como "Jo", contando caracteres completos.
 String? validateName(String? value) {
-  if ((value ?? '').trim().length < 3) return 'Informe seu nome completo';
+  if ((value ?? '').trim().characters.length < 2) {
+    return 'Informe seu nome completo';
+  }
   return null;
 }
 
