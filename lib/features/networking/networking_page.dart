@@ -6,8 +6,8 @@ import '../../core/codes.dart';
 import '../../data/mock_data.dart';
 import '../../models/user_profile.dart';
 import '../../widgets/empty_state.dart';
-import '../../widgets/page_body.dart';
 import '../../widgets/qr_box.dart';
+import '../../widgets/two_pane.dart';
 import '../checkin/scanner_page.dart';
 
 /// Cartão virtual do participante e contatos recebidos.
@@ -82,8 +82,9 @@ class NetworkingPage extends StatelessWidget {
     final profile = state.profile;
     if (profile == null) return const SizedBox.shrink();
 
-    return PageBody(
-      children: [
+    return TwoPane(
+      sideWidth: 400,
+      side: [
         Card(
           child: Padding(
             padding: const EdgeInsets.all(20),
@@ -120,6 +121,8 @@ class NetworkingPage extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 16),
+      ],
+      main: [
         Wrap(
           spacing: 8,
           runSpacing: 8,
