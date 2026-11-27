@@ -7,11 +7,11 @@ import 'dart:ui' as ui;
 
 import 'package:eventos_academicos/app.dart';
 import 'package:eventos_academicos/core/app_info.dart';
-import 'package:eventos_academicos/core/app_state.dart';
 import 'package:eventos_academicos/widgets/app_logo.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
+import 'support/app_state.dart';
 
 String _read(String path) => File(path).readAsStringSync();
 
@@ -104,8 +104,7 @@ void main() {
       tester.view.devicePixelRatio = 1;
       tester.view.physicalSize = size;
       addTearDown(tester.view.reset);
-      SharedPreferences.setMockInitialValues({});
-      final state = AppState(await SharedPreferences.getInstance());
+      final state = await newAppState();
       await tester.pumpWidget(EventosApp(state: state));
       await tester.pumpAndSettle();
 

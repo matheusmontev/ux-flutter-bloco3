@@ -2,7 +2,8 @@ import 'package:eventos_academicos/app.dart';
 import 'package:eventos_academicos/core/app_state.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
+import 'support/app_state.dart';
 
 final _brand = find.byKey(const Key('auth-brand'));
 final _email = find.byKey(const Key('email'));
@@ -11,8 +12,7 @@ Future<AppState> _pump(WidgetTester tester, Size size) async {
   tester.view.devicePixelRatio = 1;
   tester.view.physicalSize = size;
   addTearDown(tester.view.reset);
-  SharedPreferences.setMockInitialValues({});
-  final state = AppState(await SharedPreferences.getInstance());
+  final state = await newAppState();
   await tester.pumpWidget(EventosApp(state: state));
   await tester.pumpAndSettle();
   return state;

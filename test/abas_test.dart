@@ -7,15 +7,15 @@ import 'package:eventos_academicos/features/home/home_page.dart';
 import 'package:eventos_academicos/features/shell/app_tab.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
+import 'support/app_state.dart';
 
 void main() {
   testWidgets('os atalhos do início pedem a aba pelo nome', (tester) async {
     tester.view.devicePixelRatio = 1;
     tester.view.physicalSize = const Size(390, 1600);
     addTearDown(tester.view.reset);
-    SharedPreferences.setMockInitialValues({});
-    final state = AppState(await SharedPreferences.getInstance());
+    final state = await newAppState();
     await state.signIn(email: 'ana@exemplo.com', name: 'Ana Lima');
     final opened = <AppTab>[];
     await tester.pumpWidget(
