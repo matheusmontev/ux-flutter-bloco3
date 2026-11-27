@@ -2,7 +2,7 @@ import 'package:material_ui/material_ui.dart';
 
 import '../../core/app_state.dart';
 import '../../widgets/download_app_section.dart';
-import '../../widgets/page_body.dart';
+import '../../widgets/two_pane.dart';
 import 'edit_profile_page.dart';
 import 'profile_summary.dart';
 
@@ -55,14 +55,19 @@ class SettingsPage extends StatelessWidget {
     final profile = state.profile;
     return Scaffold(
       appBar: AppBar(title: const Text('Configurações')),
-      body: PageBody(
-        children: [
+      body: TwoPane(
+        sideWidth: 420,
+        side: [
           if (profile != null)
             ProfileSummary(
               profile: profile,
               onEdit: () => _editProfile(context),
             ),
-          const Divider(height: 40),
+        ],
+        main: [
+          // No celular, separa o perfil das preferências.
+          if (MediaQuery.sizeOf(context).width < TwoPane.breakpoint)
+            const Divider(height: 40),
           SwitchListTile(
             contentPadding: EdgeInsets.zero,
             title: const Text('Tema escuro'),
