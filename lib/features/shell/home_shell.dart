@@ -53,7 +53,10 @@ class _HomeShellState extends State<HomeShell> {
 
   @override
   Widget build(BuildContext context) {
-    final wide = MediaQuery.sizeOf(context).width >= 840;
+    final width = MediaQuery.sizeOf(context).width;
+    final wide = width >= 840;
+    // Em telas de computador o menu mostra os nomes ao lado dos ícones.
+    final extended = width >= 1200;
     // As abas que levam a outras abas são criadas aqui.
     final body = switch (_index) {
       0 => HomePage(onOpenTab: _select),
@@ -91,7 +94,10 @@ class _HomeShellState extends State<HomeShell> {
                 NavigationRail(
                   selectedIndex: _index,
                   onDestinationSelected: _select,
-                  labelType: NavigationRailLabelType.all,
+                  extended: extended,
+                  labelType: extended
+                      ? NavigationRailLabelType.none
+                      : NavigationRailLabelType.all,
                   destinations: [
                     for (final d in _destinations)
                       NavigationRailDestination(
