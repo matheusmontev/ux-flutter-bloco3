@@ -1,7 +1,9 @@
 import 'package:material_ui/material_ui.dart';
 
 import '../../widgets/empty_state.dart';
+import '../checkin/check_in_page.dart';
 import '../home/home_page.dart';
+import '../schedule/schedule_page.dart';
 import '../settings/settings_page.dart';
 
 class _Destination {
@@ -25,7 +27,7 @@ const _destinations = [
     'Programação',
     Icons.event_note_outlined,
     Icons.event_note,
-    _pending,
+    SchedulePage(),
   ),
   _Destination('Presenças', Icons.verified_outlined, Icons.verified, _pending),
   _Destination('Networking', Icons.people_outline, Icons.people, _pending),
@@ -66,6 +68,16 @@ class _HomeShellState extends State<HomeShell> {
           ),
         ],
       ),
+      floatingActionButton: _index <= 1
+          ? FloatingActionButton.extended(
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute<void>(builder: (_) => const CheckInPage()),
+              ),
+              icon: const Icon(Icons.qr_code_scanner),
+              label: const Text('Check-in'),
+            )
+          : null,
       body: wide
           ? Row(
               children: [
