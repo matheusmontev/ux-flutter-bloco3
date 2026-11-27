@@ -22,7 +22,7 @@ class ScheduleFilter {
       if (term.isEmpty) return true;
       return _normalize('${a.title} ${a.speaker} ${a.room}').contains(term);
     }).toList();
-    result.sort((a, b) => a.start.compareTo(b.start));
+    result.sort(byStart);
     return result;
   }
 
@@ -40,7 +40,7 @@ class ScheduleFilter {
 
 /// Agrupa as atividades por dia, com dias e horários em ordem.
 Map<DateTime, List<Activity>> groupByDay(Iterable<Activity> source) {
-  final sorted = source.toList()..sort((a, b) => a.start.compareTo(b.start));
+  final sorted = source.toList()..sort(byStart);
   final groups = <DateTime, List<Activity>>{};
   for (final activity in sorted) {
     groups.putIfAbsent(activity.day, () => []).add(activity);

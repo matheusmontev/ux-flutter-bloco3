@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:material_ui/material_ui.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../data/mock_data.dart';
 import '../models/activity.dart';
+import '../models/event.dart';
 import '../models/user_profile.dart';
 import 'codes.dart';
 
@@ -21,7 +21,7 @@ enum AddContactStatus { success, invalidCode, ownCard, alreadyAdded }
 
 /// Estado global do aplicativo, com persistência no próprio aparelho.
 class AppState extends ChangeNotifier {
-  AppState(this._prefs, {DateTime Function()? clock})
+  AppState(this._prefs, {required this.event, DateTime Function()? clock})
     : _clock = clock ?? DateTime.now {
     _restore();
   }
@@ -37,6 +37,7 @@ class AppState extends ChangeNotifier {
       'Seus dados continuam neste aparelho. Ao entrar com outro '
       'e-mail, presenças e contatos serão apagados.';
 
+  final Event event;
   final SharedPreferences _prefs;
   final DateTime Function() _clock;
 
@@ -61,25 +62,14 @@ class AppState extends ChangeNotifier {
 
   /// Atividades com presença registrada, em ordem de horário.
   List<Activity> get attendedActivities =>
-      activities.where((a) => hasAttended(a.id)).toList()
-        ..sort((a, b) => a.start.compareTo(b.start));
+      event.activities.where((a) => hasAttended(a.id)).toList();
 
   Duration get attendedHours =>
       attendedActivities.fold(Duration.zero, (total, a) => total + a.duration);
 
   /// Próximas atividades ainda sem presença.
   List<Activity> upcoming({int limit = 3}) =>
-      (activities.where((a) => !hasAttended(a.id)).toList()
-            ..sort((a, b) => a.start.compareTo(b.start)))
-          .take(limit)
-          .toList();
-
-  Activity? findActivity(String id) {
-    for (final activity in activities) {
-      if (activity.id == id) return activity;
-    }
-    return null;
-  }
+      event.activities.where((a) => !hasAttended(a.id)).take(limit).toList();
 
   /// Entrada simulada: não há servidor e a senha não é armazenada.
   /// Ao trocar de conta, os dados da conta anterior são apagados.
@@ -117,7 +107,7 @@ class AppState extends ChangeNotifier {
   /// Com [expectedId], recusa o código de outra atividade.
   Future<CheckInResult> checkIn(String raw, {String? expectedId}) async {
     final id = parseCheckInCode(raw);
-    final activity = id == null ? null : findActivity(id);
+    final activity = id == null ? null : event.findActivity(id);
     if (activity == null) {
       return const CheckInResult(CheckInStatus.invalidCode);
     }

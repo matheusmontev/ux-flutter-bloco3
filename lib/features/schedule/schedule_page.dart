@@ -3,7 +3,6 @@ import 'package:material_ui/material_ui.dart';
 import '../../core/app_state.dart';
 import '../../core/formatters.dart';
 import '../../core/schedule_filter.dart';
-import '../../data/mock_data.dart';
 import '../../models/activity.dart';
 import '../../widgets/agenda_item.dart';
 import '../../widgets/empty_state.dart';
@@ -54,9 +53,9 @@ class _SchedulePageState extends State<SchedulePage> {
       theme: _theme,
       query: _search.text,
     );
-    final results = filter.apply(activities);
-    final days = {for (final a in activities) a.day}.toList()..sort();
-    final themes = {for (final a in activities) a.theme}.toList()..sort();
+    final results = filter.apply(state.event.activities);
+    final days = state.event.days;
+    final themes = state.event.themes;
 
     final extra = (_period == null ? 0 : 1) + (_theme == null ? 0 : 1);
 

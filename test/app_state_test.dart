@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 Future<AppState> _load() async => AppState(
   await SharedPreferences.getInstance(),
+  event: demoEvent,
   clock: () => DateTime(2026, 12, 9, 8, 35),
 );
 

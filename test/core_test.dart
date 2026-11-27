@@ -92,7 +92,7 @@ void main() {
     });
 
     test('texto traz nome, atividade e carga horária', () {
-      final text = certificateText(ana, activities[0]);
+      final text = certificateText(ana, activities[0], demoEvent);
 
       expect(text, contains('Ana Lima'));
       expect(text, contains(activities[0].title));

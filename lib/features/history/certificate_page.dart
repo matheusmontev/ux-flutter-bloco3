@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 
 import '../../core/app_state.dart';
 import '../../core/certificate.dart';
-import '../../data/mock_data.dart';
 import '../../models/activity.dart';
 import '../../widgets/page_body.dart';
 
@@ -24,8 +23,10 @@ class CertificatePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final profile = AppScope.of(context).sessionProfile;
-    final text = certificateText(profile, activity);
+    final state = AppScope.of(context);
+    final profile = state.sessionProfile;
+    final event = state.event;
+    final text = certificateText(profile, activity, event);
     final code = certificateCode(profile, activity);
 
     return Scaffold(
@@ -73,7 +74,7 @@ class CertificatePage extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 16),
-                      const Text(eventPlace),
+                      Text(event.place),
                       const Divider(height: 32),
                       Text(
                         'Código: $code',
@@ -94,7 +95,7 @@ class CertificatePage extends StatelessWidget {
           const SizedBox(height: 20),
           FilledButton.icon(
             onPressed: () =>
-                _copy(context, certificateShareText(profile, activity)),
+                _copy(context, certificateShareText(profile, activity, event)),
             icon: const Icon(Icons.copy),
             label: const Text('Copiar texto'),
           ),

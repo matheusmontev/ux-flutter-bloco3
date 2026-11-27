@@ -27,6 +27,15 @@ const _months = [
 
 String formatDayNumber(DateTime date) => _two(date.day);
 
+/// Do primeiro ao último dia, como em "9 a 11 de dezembro".
+String formatPeriodLong(DateTime first, DateTime last) {
+  final sameMonth = first.year == last.year && first.month == last.month;
+  final start = sameMonth
+      ? '${first.day}'
+      : '${first.day} de ${formatMonthLong(first)}';
+  return '$start a ${last.day} de ${formatMonthLong(last)}';
+}
+
 String formatMonthShort(DateTime date) =>
     _months[date.month - 1].substring(0, 3);
 

@@ -4,7 +4,6 @@ import '../../core/app_state.dart';
 import '../../core/formatters.dart';
 import '../../core/schedule_filter.dart';
 import '../../core/theme.dart';
-import '../../data/mock_data.dart';
 import '../../models/activity.dart';
 import '../../widgets/agenda_item.dart';
 import '../../widgets/empty_state.dart';
@@ -28,6 +27,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = AppScope.of(context);
+    final event = state.event;
     final theme = Theme.of(context);
     final upcoming = state.upcoming(limit: 4);
     final next = upcoming.isEmpty ? null : upcoming.first;
@@ -44,10 +44,10 @@ class HomePage extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 4),
-        const Text(eventName),
+        Text(event.name),
         Text(
-          '${formatDate(activities.first.start)} a '
-          '${formatDate(activities.last.start)}, $eventPlace',
+          '${formatDate(event.firstDay)} a '
+          '${formatDate(event.lastDay)}, ${event.place}',
           style: theme.textTheme.bodySmall?.copyWith(
             color: theme.colorScheme.onSurfaceVariant,
           ),
