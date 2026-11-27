@@ -41,7 +41,12 @@ class _SchedulePageState extends State<SchedulePage> {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) => LayoutBuilder(
+    builder: (_, constraints) =>
+        _content(context, compact: !TwoPane.isWide(constraints)),
+  );
+
+  Widget _content(BuildContext context, {required bool compact}) {
     final state = AppScope.of(context);
     final filter = ScheduleFilter(
       day: _day,
@@ -53,7 +58,6 @@ class _SchedulePageState extends State<SchedulePage> {
     final days = {for (final a in activities) a.day}.toList()..sort();
     final themes = {for (final a in activities) a.theme}.toList()..sort();
 
-    final compact = MediaQuery.sizeOf(context).width < TwoPane.breakpoint;
     final extra = (_period == null ? 0 : 1) + (_theme == null ? 0 : 1);
 
     return TwoPane(

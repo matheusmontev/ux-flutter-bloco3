@@ -44,7 +44,7 @@ class _AuthPageState extends State<AuthPage> {
     return Scaffold(
       body: LayoutBuilder(
         builder: (context, constraints) {
-          if (constraints.maxWidth < TwoPane.breakpoint) {
+          if (!TwoPane.isWide(constraints)) {
             return ListView(
               padding: EdgeInsets.zero,
               children: [
