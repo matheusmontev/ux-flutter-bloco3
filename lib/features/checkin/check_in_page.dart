@@ -95,7 +95,9 @@ class _CheckInPageState extends State<CheckInPage> {
             controller: _code,
             decoration: InputDecoration(
               labelText: 'Código da atividade',
-              hintText: checkInCode('a01'),
+              hintText: checkInCode(
+                AppScope.of(context).event.activities.first.id,
+              ),
             ),
             autocorrect: false,
             onSubmitted: _register,

@@ -22,9 +22,11 @@ class Event {
   List<String> get themes =>
       {for (final a in activities) a.theme}.toList()..sort();
 
+  /// Não diferencia maiúsculas, porque o código pode ser digitado.
   Activity? findActivity(String id) {
+    final wanted = id.toLowerCase();
     for (final activity in activities) {
-      if (activity.id == id) return activity;
+      if (activity.id.toLowerCase() == wanted) return activity;
     }
     return null;
   }

@@ -27,8 +27,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    final profile = AppScope.of(context).profile;
-    if (_filled || profile == null) return;
+    final profile = AppScope.of(context).sessionProfile;
+    if (_filled) return;
     _filled = true;
     _name.text = profile.name;
     _course.text = profile.course;
@@ -52,7 +52,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     await state.updateProfile(
       UserProfile(
         name: _name.text.trim(),
-        email: state.profile!.email,
+        email: state.sessionProfile.email,
         course: _course.text.trim(),
         institution: _institution.text.trim(),
         link: _link.text.trim(),
@@ -93,7 +93,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             key: const Key('preview'),
             listenable: _name,
             builder: (context, _) {
-              final email = AppScope.of(context).profile?.email ?? '';
+              final email = AppScope.of(context).sessionProfile.email;
               final typed = _name.text.trim();
               return BadgeCard(
                 header: ProfileBadgeHeader(

@@ -47,18 +47,17 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = AppScope.of(context);
-    final profile = state.profile;
+    final profile = state.sessionProfile;
     return Scaffold(
       appBar: AppBar(title: const Text('Configurações')),
       body: LayoutBuilder(
         builder: (_, constraints) => TwoPane(
           sideWidth: 420,
           side: [
-            if (profile != null)
-              ProfileSummary(
-                profile: profile,
-                onEdit: () => _editProfile(context),
-              ),
+            ProfileSummary(
+              profile: profile,
+              onEdit: () => _editProfile(context),
+            ),
           ],
           main: [
             // No celular, separa o perfil das preferências.
