@@ -1,29 +1,77 @@
-# Projeto Semestral de UX — Bloco 3
+<img src="web/icons/Icon-192.png" alt="Logo do Presente: um ingresso com um sinal de confirmação" width="96">
 
-> **Trabalho acadêmico** da disciplina **UX Design e Prototipação de Interfaces** (WallTech).
-> Aplicativo front-end em **Flutter/Dart**, desenvolvido para fins de avaliação.
+# Presente
 
-| Item | Situação |
+Aplicativo para participantes de eventos acadêmicos: programação, check-in por QR Code, certificados e troca de contatos.
+
+> **Trabalho acadêmico** da disciplina **UX Design e Prototipação de Interfaces** (WallTech), no Projeto Semestral, Bloco 3.
+> Protótipo front-end em **Flutter/Dart**, desenvolvido para fins de avaliação.
+
+| Acesso | Onde |
+| :--- | :--- |
+| Aplicativo na web | https://ux-flutter-bloco3.vercel.app |
+| Android (APK) | [baixar a versão mais recente](https://github.com/matheusmontev/ux-flutter-bloco3/releases/latest/download/eventos-academicos.apk) |
+| Executar o código | [Guia técnico](docs/GUIA.md) |
+
+| Projeto | Situação |
 | :--- | :--- |
 | **Entrega** | **30/11/2026** — Apresentações Executivas (Pitch de UX) |
 | Devolutiva | 07/12/2026 |
 | Valor do Bloco 3 | 16 pontos (Pitch 8 + Documentação e Implementação 8) |
 | Tema | **10 — Eventos Acadêmicos, Credenciamento e Networking** ([todos os temas](docs/TEMAS.md)) |
 | Equipe | _a preencher_ |
-| App publicado | https://ux-flutter-bloco3.vercel.app |
-| Como executar | [Guia técnico](docs/GUIA.md) |
 
 O Bloco 3 integra a Unidade 2 (OAT2, 20 pontos): 16 do projeto e 4 de atividades gerais.
 
-## Como testar o app publicado
+O evento do aplicativo, a **Semana Acadêmica de Tecnologia**, é fictício, assim como as pessoas e os horários.
 
-1. Abra https://ux-flutter-bloco3.vercel.app e crie uma conta com dados fictícios. O acesso é simulado.
-2. Em **Programação**, use os filtros e abra uma atividade.
-3. Toque em **Fazer check-in** e em **Simular leitura do QR Code**.
-4. Em **Presenças**, abra o certificado.
-5. Em **Networking**, veja seu cartão e adicione o contato de exemplo.
+## O que o aplicativo faz
 
-O evento, as pessoas e os horários do app são fictícios.
+| Área | O que a pessoa faz |
+| :--- | :--- |
+| Entrada | Cria uma conta ou entra, vendo as datas e o local do evento |
+| Início | Vê em um ingresso o horário e a sala da próxima atividade, faz o check-in e acompanha as seguintes |
+| Programação | Consulta a agenda por dia, busca e filtra por dia, turno e tema |
+| Atividade | Vê horário, sala, palestrante e descrição |
+| Check-in | Lê o QR Code pela câmera ou digita o código |
+| Presenças | Acompanha presenças e carga horária por tema |
+| Certificado | Abre o certificado de cada presença e copia o texto |
+| Networking | Mostra o cartão virtual em formato de crachá e guarda contatos |
+| Perfil | Consulta os dados e edita com prévia do crachá |
+| Configurações | Escolhe o tema escuro, baixa o app e sai da conta |
+
+No computador, as principais telas usam duas colunas e menu lateral.
+
+## Como testar
+
+1. Abra o [aplicativo na web](https://ux-flutter-bloco3.vercel.app).
+2. Em **Criar uma conta**, use dados fictícios, como `teste@exemplo.com` e a senha `teste123`.
+3. No ingresso da tela inicial, toque em **Fazer check-in** e em **Simular leitura do QR Code**.
+4. Volte e abra **Presenças** para ver o certificado.
+5. Em **Programação**, combine a busca e os filtros.
+6. Em **Networking**, veja o crachá e toque em **Adicionar contato de exemplo**.
+7. Na engrenagem, toque em **Editar perfil** e observe a prévia.
+
+Para testar a câmera, abra **Ver códigos de demonstração** em um aparelho e leia o QR Code com outro.
+
+## Instalar no celular
+
+- **Android:** baixe o APK pelo link acima ou por **Configurações → Baixar o aplicativo** na versão web. O sistema pode pedir permissão. Para instalar uma versão nova, pode ser preciso desinstalar a anterior, o que apaga os dados do app.
+- **iPhone:** abra o site no Safari, toque em **Compartilhar** e em **Adicionar à Tela de Início**. É o próprio site na tela inicial, não um app nativo, e ele precisa de internet.
+
+## Limitações
+
+- O login é simulado: não há autenticação e a senha não é conferida nem armazenada.
+- Não há servidor. Os dados ficam no aparelho, e entrar com outro e-mail apaga presenças e contatos.
+- O código de check-in pode ser digitado fora da sala, e não há conferência de horário.
+- O certificado é uma demonstração, sem validade e sem exportação em PDF.
+- O APK é assinado com chave de depuração e não serve para publicação em loja.
+
+## Qualidade
+
+Há testes automatizados de regras, de telas e de layout em tamanhos de celular e computador. A cada pull request, o GitHub confere formatação, análise, testes e a geração das versões web e Android. Cada merge na `main` atualiza o site e gera um APK.
+
+Os testes automatizados não substituem o uso em aparelho real. As [verificações manuais](docs/GUIA.md#verificações-manuais) precisam ser registradas pela equipe.
 
 ## Objetivo
 
@@ -63,14 +111,7 @@ O networking ficou na frente 3 para equilibrar a divisão.
 
 ### Fluxo principal da demonstração
 
-Login → home → filtrar a programação → abrir uma atividade → fazer check-in → ver a presença no histórico → abrir o certificado → compartilhar o cartão virtual
-
-### Decisões para o protótipo (sugestões)
-
-- **Dados:** evento, atividades, presenças e contatos simulados, sem backend.
-- **Certificado:** liberado na tela quando a presença é registrada no app.
-- **QR Code:** testar a câmera em um celular real logo no começo e ter um código de teste. Prever um botão de simulação, identificado como tal, e uma mensagem para o caso de a câmera ser negada.
-- **Estados a tratar:** filtro sem resultado, código inválido, check-in repetido e histórico vazio.
+Login → início → filtrar a programação → abrir uma atividade → fazer check-in → ver a presença no histórico → abrir o certificado → compartilhar o cartão virtual
 
 ## Telas e divisão da equipe
 
@@ -104,11 +145,11 @@ As datas abaixo são uma proposta para o prazo que resta, a partir de 26/11. O c
 
 **Estudar:** organização de pastas, rotas, tema global e layouts responsivos (`LayoutBuilder`, `MediaQuery`).
 
-- [ ] Criar o projeto com `flutter create`
-- [ ] Definir a estrutura de pastas e o gerenciamento de estado
-- [ ] Configurar cores, tipografia e rotas
-- [ ] Criar os dados simulados
-- [ ] Anotar as versões do Flutter e do Dart usadas
+- [x] Criar o projeto com `flutter create`
+- [x] Definir a estrutura de pastas e o gerenciamento de estado
+- [x] Configurar cores, tipografia e rotas
+- [x] Criar os dados simulados
+- [x] Anotar as versões do Flutter e do Dart usadas
 
 **Pronto quando:** todos clonam o repositório e executam o app.
 
@@ -116,11 +157,11 @@ As datas abaixo são uma proposta para o prazo que resta, a partir de 26/11. O c
 
 **Estudar:** formulários e validação, listas, filtros e atualização de estado.
 
-- [ ] Frente 1: login/cadastro, home e configurações
-- [ ] Frente 2: tela central, listagem, filtros e ação principal
-- [ ] Frente 3: histórico, resumo ou gráficos, comprovante e feedback
-- [ ] Tratar estados vazios e erros
-- [ ] Integrar as três frentes
+- [x] Frente 1: login/cadastro, home e configurações
+- [x] Frente 2: tela central, listagem, filtros e ação principal
+- [x] Frente 3: histórico, resumo ou gráficos, comprovante e feedback
+- [x] Tratar estados vazios e erros
+- [x] Integrar as três frentes
 
 **Pronto quando:** o fluxo principal funciona do começo ao fim.
 
@@ -128,9 +169,9 @@ As datas abaixo são uma proposta para o prazo que resta, a partir de 26/11. O c
 
 **Estudar:** testes de unidade e de widget no Flutter e critérios de usabilidade.
 
-- [ ] Escrever os cenários de teste, incluindo os de erro
-- [ ] Executar `flutter test`
-- [ ] Testar em tamanhos de tela diferentes
+- [x] Escrever os cenários de teste, incluindo os de erro
+- [x] Executar `flutter test`
+- [x] Testar em tamanhos de tela diferentes
 - [ ] Registrar resultados reais, com capturas de tela
 - [ ] Registrar cada falha encontrada e como foi tratada
 
