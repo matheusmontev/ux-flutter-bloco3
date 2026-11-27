@@ -10,9 +10,20 @@
 | Valor do Bloco 3 | 16 pontos (Pitch 8 + Documentação e Implementação 8) |
 | Tema | **10 — Eventos Acadêmicos, Credenciamento e Networking** ([todos os temas](docs/TEMAS.md)) |
 | Equipe | _a preencher_ |
-| Código | ainda não iniciado |
+| App publicado | https://ux-flutter-bloco3.vercel.app |
+| Como executar | [Guia técnico](docs/GUIA.md) |
 
 O Bloco 3 integra a Unidade 2 (OAT2, 20 pontos): 16 do projeto e 4 de atividades gerais.
+
+## Como testar o app publicado
+
+1. Abra https://ux-flutter-bloco3.vercel.app e crie uma conta com dados fictícios. O acesso é simulado.
+2. Em **Programação**, use os filtros e abra uma atividade.
+3. Toque em **Fazer check-in** e em **Simular leitura do QR Code**.
+4. Em **Presenças**, abra o certificado.
+5. Em **Networking**, veja seu cartão e adicione o contato de exemplo.
+
+O evento, as pessoas e os horários do app são fictícios.
 
 ## Objetivo
 
