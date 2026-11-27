@@ -53,3 +53,5 @@ String formatHours(Duration duration) {
   if (minutes == 0) return '${hours}h';
   return '${hours}h${_two(minutes)}';
 }
+
+String formatMonthLong(DateTime date) => _months[date.month - 1];
