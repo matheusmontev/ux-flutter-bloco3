@@ -6,37 +6,7 @@ import '../home/home_page.dart';
 import '../networking/networking_page.dart';
 import '../schedule/schedule_page.dart';
 import '../settings/settings_page.dart';
-
-class _Destination {
-  const _Destination(this.label, this.icon, this.selectedIcon, this.page);
-
-  final String label;
-  final IconData icon;
-  final IconData selectedIcon;
-  final Widget page;
-}
-
-const _destinations = [
-  _Destination('Início', Icons.home_outlined, Icons.home, SizedBox()),
-  _Destination(
-    'Programação',
-    Icons.event_note_outlined,
-    Icons.event_note,
-    SchedulePage(),
-  ),
-  _Destination(
-    'Presenças',
-    Icons.verified_outlined,
-    Icons.verified,
-    SizedBox(),
-  ),
-  _Destination(
-    'Networking',
-    Icons.people_outline,
-    Icons.people,
-    NetworkingPage(),
-  ),
-];
+import 'app_tab.dart';
 
 /// Navegação principal: barra inferior no celular, lateral em telas largas.
 class HomeShell extends StatefulWidget {
@@ -47,9 +17,11 @@ class HomeShell extends StatefulWidget {
 }
 
 class _HomeShellState extends State<HomeShell> {
-  int _index = 0;
+  AppTab _tab = AppTab.home;
 
-  void _select(int index) => setState(() => _index = index);
+  void _select(AppTab tab) => setState(() => _tab = tab);
+
+  void _selectAt(int index) => _select(AppTab.values[index]);
 
   @override
   Widget build(BuildContext context) {
@@ -58,15 +30,18 @@ class _HomeShellState extends State<HomeShell> {
     // Em telas de computador o menu mostra os nomes ao lado dos ícones.
     final extended = width >= 1200;
     // As abas que levam a outras abas são criadas aqui.
-    final body = switch (_index) {
-      0 => HomePage(onOpenTab: _select),
-      2 => HistoryPage(onOpenSchedule: () => _select(1)),
-      _ => _destinations[_index].page,
+    final body = switch (_tab) {
+      AppTab.home => HomePage(onOpenTab: _select),
+      AppTab.schedule => const SchedulePage(),
+      AppTab.history => HistoryPage(
+        onOpenSchedule: () => _select(AppTab.schedule),
+      ),
+      AppTab.networking => const NetworkingPage(),
     };
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(_destinations[_index].label),
+        title: Text(_tab.label),
         actions: [
           IconButton(
             tooltip: 'Configurações',
@@ -79,7 +54,7 @@ class _HomeShellState extends State<HomeShell> {
         ],
       ),
       // No início, o próprio ingresso já traz o check-in.
-      floatingActionButton: _index == 1
+      floatingActionButton: _tab.showsCheckInButton
           ? FloatingActionButton.extended(
               onPressed: () => Navigator.push(
                 context,
@@ -93,14 +68,14 @@ class _HomeShellState extends State<HomeShell> {
           ? Row(
               children: [
                 NavigationRail(
-                  selectedIndex: _index,
-                  onDestinationSelected: _select,
+                  selectedIndex: _tab.index,
+                  onDestinationSelected: _selectAt,
                   extended: extended,
                   labelType: extended
                       ? NavigationRailLabelType.none
                       : NavigationRailLabelType.all,
                   destinations: [
-                    for (final d in _destinations)
+                    for (final d in AppTab.values)
                       NavigationRailDestination(
                         icon: Icon(d.icon),
                         selectedIcon: Icon(d.selectedIcon),
@@ -116,10 +91,10 @@ class _HomeShellState extends State<HomeShell> {
       bottomNavigationBar: wide
           ? null
           : NavigationBar(
-              selectedIndex: _index,
-              onDestinationSelected: _select,
+              selectedIndex: _tab.index,
+              onDestinationSelected: _selectAt,
               destinations: [
-                for (final d in _destinations)
+                for (final d in AppTab.values)
                   NavigationDestination(
                     icon: Icon(d.icon),
                     selectedIcon: Icon(d.selectedIcon),

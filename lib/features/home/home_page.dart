@@ -11,13 +11,14 @@ import '../../widgets/ticket_card.dart';
 import '../../widgets/two_pane.dart';
 import '../checkin/check_in_page.dart';
 import '../schedule/activity_detail_page.dart';
+import '../shell/app_tab.dart';
 
 /// Painel inicial: onde ir agora, resumo do participante e o que vem depois.
 class HomePage extends StatelessWidget {
   const HomePage({super.key, required this.onOpenTab});
 
-  /// Abre uma das abas da navegação principal pelo índice.
-  final ValueChanged<int> onOpenTab;
+  /// Abre uma das abas da navegação principal pelo nome.
+  final ValueChanged<AppTab> onOpenTab;
 
   void _open(BuildContext context, Widget page) =>
       Navigator.push(context, MaterialPageRoute<void>(builder: (_) => page));
@@ -70,19 +71,19 @@ class HomePage extends StatelessWidget {
               _Stat(
                 label: 'Presenças',
                 value: '${state.attendedActivities.length}',
-                onTap: () => onOpenTab(2),
+                onTap: () => onOpenTab(AppTab.history),
               ),
               const VerticalDivider(width: 1),
               _Stat(
                 label: 'Carga horária',
                 value: formatHours(state.attendedHours),
-                onTap: () => onOpenTab(2),
+                onTap: () => onOpenTab(AppTab.history),
               ),
               const VerticalDivider(width: 1),
               _Stat(
                 label: 'Contatos',
                 value: '${state.contacts.length}',
-                onTap: () => onOpenTab(3),
+                onTap: () => onOpenTab(AppTab.networking),
               ),
             ],
           ),
@@ -116,7 +117,7 @@ class HomePage extends StatelessWidget {
         ],
         const SizedBox(height: 16),
         OutlinedButton(
-          onPressed: () => onOpenTab(1),
+          onPressed: () => onOpenTab(AppTab.schedule),
           child: const Text('Ver programação completa'),
         ),
       ],
