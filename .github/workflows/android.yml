@@ -1,0 +1,57 @@
+name: Android
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: android-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: 3.50.1
+          cache: true
+      - run: flutter pub get
+      - run: flutter build apk --release
+      - run: cp build/app/outputs/flutter-apk/app-release.apk eventos-academicos.apk
+      - uses: actions/upload-artifact@v4
+        with:
+          name: apk
+          path: eventos-academicos.apk
+
+  publicar:
+    needs: apk
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: apk
+      - name: Publicar o APK
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          tag="android-${{ github.run_number }}"
+          gh release create "$tag" eventos-academicos.apk \
+            --target "${{ github.sha }}" \
+            --title "Aplicativo Android ${{ github.run_number }}" \
+            --notes "APK de demonstração, assinado com chave de depuração. Para instalar sobre uma versão anterior, pode ser preciso desinstalá-la." \
+            --latest

@@ -44,6 +44,14 @@ A Vercel executa `tool/vercel_build.sh`, que instala o Flutter na mesma versão 
 
 O script `tool/publicar.sh` fica como alternativa manual.
 
+## Aplicativo para Android
+
+Na versão web, **Configurações → Baixar o aplicativo** baixa o APK mais recente. O workflow `.github/workflows/android.yml` gera o APK em cada pull request, para conferir o build, e cria uma release a cada envio para a `main`.
+
+O APK é assinado com uma chave de depuração criada a cada execução. Serve para demonstração: para instalar uma versão nova, pode ser preciso desinstalar a anterior. Não é adequado para publicação em loja.
+
+No iPhone não há APK: o app é adicionado à tela de início pelo Safari.
+
 ## Estrutura do código
 
 ```text
@@ -97,7 +105,7 @@ Preencher somente depois de executar cada item.
 - O código de check-in é um texto previsível e pode ser digitado fora da sala. Também não há verificação de horário. Um uso real exigiria validação no servidor.
 - O certificado é uma demonstração, sem validade e sem exportação em PDF.
 - Os contatos são compartilhados pelo QR Code ou pelo código copiado.
-- A versão para Android não foi compilada nem testada.
+- A versão para Android é compilada no GitHub Actions, mas ainda não foi testada em um aparelho.
 
 ## Identidade visual
 
