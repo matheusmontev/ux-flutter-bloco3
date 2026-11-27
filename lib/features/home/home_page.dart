@@ -3,11 +3,13 @@ import 'package:material_ui/material_ui.dart';
 import '../../core/app_state.dart';
 import '../../core/formatters.dart';
 import '../../core/schedule_filter.dart';
+import '../../core/theme.dart';
 import '../../data/mock_data.dart';
 import '../../models/activity.dart';
 import '../../widgets/agenda_item.dart';
 import '../../widgets/empty_state.dart';
 import '../../widgets/ticket_card.dart';
+import '../../widgets/ticket_info.dart';
 import '../../widgets/two_pane.dart';
 import '../checkin/check_in_page.dart';
 import '../schedule/activity_detail_page.dart';
@@ -149,32 +151,8 @@ class _NextTicket extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text('A seguir, ${formatDayLong(activity.start).toLowerCase()}'),
-          Text(
-            formatTime(activity.start),
-            style: theme.textTheme.displayMedium?.copyWith(
-              color: ink,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 3),
-                child: Icon(Icons.place, size: 22, color: ink),
-              ),
-              const SizedBox(width: 6),
-              Expanded(
-                child: Text(
-                  activity.room,
-                  style: theme.textTheme.titleLarge?.copyWith(
-                    color: ink,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-            ],
-          ),
+          TicketTime(activity.start),
+          TicketPlace(activity.room),
           const SizedBox(height: 12),
           Text(
             activity.title,
@@ -184,10 +162,7 @@ class _NextTicket extends StatelessWidget {
         ],
       ),
       stub: FilledButton.icon(
-        style: FilledButton.styleFrom(
-          backgroundColor: colors.tertiary,
-          foregroundColor: colors.onTertiary,
-        ),
+        style: accentButtonStyle(colors),
         onPressed: onCheckIn,
         icon: const Icon(Icons.qr_code_scanner),
         label: const Text('Fazer check-in'),

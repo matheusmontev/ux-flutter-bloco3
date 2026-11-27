@@ -2,6 +2,7 @@ import 'package:material_ui/material_ui.dart';
 
 import '../../core/app_state.dart';
 import '../../core/codes.dart';
+import '../../core/theme.dart';
 import '../../models/activity.dart';
 import '../../widgets/page_body.dart';
 import 'demo_codes_page.dart';
@@ -80,10 +81,7 @@ class _CheckInPageState extends State<CheckInPage> {
                 ),
                 const SizedBox(height: 16),
                 FilledButton.icon(
-                  style: FilledButton.styleFrom(
-                    backgroundColor: theme.colorScheme.tertiary,
-                    foregroundColor: theme.colorScheme.onTertiary,
-                  ),
+                  style: accentButtonStyle(theme.colorScheme),
                   onPressed: _scan,
                   icon: const Icon(Icons.qr_code_scanner),
                   label: const Text('Ler com a câmera'),

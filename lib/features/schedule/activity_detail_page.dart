@@ -2,9 +2,11 @@ import 'package:material_ui/material_ui.dart';
 
 import '../../core/app_state.dart';
 import '../../core/formatters.dart';
+import '../../core/theme.dart';
 import '../../models/activity.dart';
 import '../../widgets/page_body.dart';
 import '../../widgets/ticket_card.dart';
+import '../../widgets/ticket_info.dart';
 import '../checkin/check_in_page.dart';
 
 /// Detalhes de uma atividade e acesso ao check-in.
@@ -39,47 +41,20 @@ class ActivityDetailPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(formatDayLong(activity.start)),
-                Text(
-                  formatTime(activity.start),
-                  style: theme.textTheme.displayMedium?.copyWith(
-                    color: ink,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
+                TicketTime(activity.start),
                 Text(
                   'até ${formatTime(activity.end)}, '
                   '${formatHours(activity.duration)} de atividade',
                 ),
                 const SizedBox(height: 16),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 3),
-                      child: Icon(Icons.place, size: 22, color: ink),
-                    ),
-                    const SizedBox(width: 6),
-                    Expanded(
-                      child: Text(
-                        activity.room,
-                        style: theme.textTheme.titleLarge?.copyWith(
-                          color: ink,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                TicketPlace(activity.room),
                 const SizedBox(height: 4),
                 Text('Com ${activity.speaker}'),
               ],
             ),
             stub: attendedAt == null
                 ? FilledButton.icon(
-                    style: FilledButton.styleFrom(
-                      backgroundColor: colors.tertiary,
-                      foregroundColor: colors.onTertiary,
-                    ),
+                    style: accentButtonStyle(colors),
                     onPressed: () => Navigator.push(
                       context,
                       MaterialPageRoute<void>(

@@ -3,8 +3,10 @@ import 'package:flutter/services.dart';
 
 import '../../core/app_state.dart';
 import '../../core/codes.dart';
+import '../../core/theme.dart';
 import '../../data/mock_data.dart';
 import '../../models/user_profile.dart';
+import '../../widgets/badge_avatar.dart';
 import '../../widgets/badge_card.dart';
 import '../../widgets/empty_state.dart';
 import '../../widgets/qr_box.dart';
@@ -85,15 +87,7 @@ class NetworkingPage extends StatelessWidget {
         BadgeCard(
           header: Column(
             children: [
-              CircleAvatar(
-                radius: 26,
-                backgroundColor: theme.colorScheme.onPrimary,
-                foregroundColor: theme.colorScheme.primary,
-                child: Text(
-                  profile.initials,
-                  style: const TextStyle(fontWeight: FontWeight.w700),
-                ),
-              ),
+              BadgeAvatar(initials: profile.initials, radius: 26),
               const SizedBox(height: 8),
               Text(
                 profile.name,
@@ -135,10 +129,7 @@ class NetworkingPage extends StatelessWidget {
           children: [
             FilledButton.icon(
               key: const Key('ler-cartao'),
-              style: FilledButton.styleFrom(
-                backgroundColor: theme.colorScheme.tertiary,
-                foregroundColor: theme.colorScheme.onTertiary,
-              ),
+              style: accentButtonStyle(theme.colorScheme),
               onPressed: () => _scan(context),
               icon: const Icon(Icons.qr_code_scanner),
               label: const Text('Ler cartão'),
@@ -212,9 +203,8 @@ class NetworkingPage extends StatelessWidget {
 
   static List<String> _details(UserProfile profile) => [
     profile.email,
-    if (profile.course.isNotEmpty) profile.course,
-    if (profile.institution.isNotEmpty) profile.institution,
-    if (profile.link.isNotEmpty) profile.link,
+    for (final detail in profile.optionalDetails)
+      if (detail.value.isNotEmpty) detail.value,
   ];
 }
 
