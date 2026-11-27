@@ -1,10 +1,12 @@
 import 'package:material_ui/material_ui.dart';
 
+import '../../core/app_info.dart';
 import '../../core/app_state.dart';
 import '../../core/formatters.dart';
 import '../../core/schedule_filter.dart';
 import '../../core/validators.dart';
 import '../../data/mock_data.dart';
+import '../../widgets/app_logo.dart';
 import '../../widgets/two_pane.dart';
 
 /// Entrada e cadastro do participante.
@@ -179,7 +181,31 @@ class _EventTitle extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(Icons.confirmation_number_outlined, size: 40, color: color),
+          Row(
+            children: [
+              // O contorno separa a logo do fundo, que tem a mesma cor.
+              DecoratedBox(
+                decoration: BoxDecoration(
+                  border: Border.all(color: color, width: 2),
+                  borderRadius: BorderRadius.circular(14),
+                ),
+                child: const Padding(
+                  padding: EdgeInsets.all(2),
+                  child: AppLogo(size: 52),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Flexible(
+                child: Text(
+                  appName,
+                  style: theme.textTheme.headlineSmall?.copyWith(
+                    color: color,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ],
+          ),
           const SizedBox(height: 12),
           Text(
             eventName,
