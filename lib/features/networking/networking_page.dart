@@ -5,6 +5,7 @@ import '../../core/app_state.dart';
 import '../../core/codes.dart';
 import '../../data/mock_data.dart';
 import '../../models/user_profile.dart';
+import '../../widgets/badge_card.dart';
 import '../../widgets/empty_state.dart';
 import '../../widgets/qr_box.dart';
 import '../../widgets/two_pane.dart';
@@ -85,39 +86,48 @@ class NetworkingPage extends StatelessWidget {
     return TwoPane(
       sideWidth: 400,
       side: [
-        Card(
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              children: [
-                CircleAvatar(radius: 28, child: Text(profile.initials)),
-                const SizedBox(height: 12),
-                Text(
-                  profile.name,
-                  style: theme.textTheme.titleLarge,
-                  textAlign: TextAlign.center,
+        BadgeCard(
+          header: Column(
+            children: [
+              CircleAvatar(
+                radius: 26,
+                backgroundColor: theme.colorScheme.onPrimary,
+                foregroundColor: theme.colorScheme.primary,
+                child: Text(
+                  profile.initials,
+                  style: const TextStyle(fontWeight: FontWeight.w700),
                 ),
-                for (final line in _details(profile))
-                  Text(line, textAlign: TextAlign.center),
-                const SizedBox(height: 16),
-                QrBox(
-                  data: cardCode(profile),
-                  label: 'QR Code do seu cartão virtual',
-                  size: 220,
+              ),
+              const SizedBox(height: 8),
+              Text(
+                profile.name,
+                style: theme.textTheme.titleLarge?.copyWith(
+                  color: theme.colorScheme.onPrimary,
+                  fontWeight: FontWeight.w700,
                 ),
-                const SizedBox(height: 12),
-                OutlinedButton.icon(
-                  onPressed: () => _share(context, profile),
-                  icon: const Icon(Icons.copy),
-                  label: const Text('Copiar código do cartão'),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  'Quem lê o cartão recebe os dados acima.',
-                  style: theme.textTheme.bodySmall,
-                ),
-              ],
-            ),
+              ),
+              for (final line in _details(profile)) Text(line),
+            ],
+          ),
+          child: Column(
+            children: [
+              QrBox(
+                data: cardCode(profile),
+                label: 'QR Code do seu cartão virtual',
+                size: 190,
+              ),
+              const SizedBox(height: 8),
+              TextButton.icon(
+                onPressed: () => _share(context, profile),
+                icon: const Icon(Icons.copy),
+                label: const Text('Copiar código do cartão'),
+              ),
+              Text(
+                'Quem lê o cartão recebe os dados acima.',
+                style: theme.textTheme.bodySmall,
+                textAlign: TextAlign.center,
+              ),
+            ],
           ),
         ),
         const SizedBox(height: 16),
@@ -128,6 +138,11 @@ class NetworkingPage extends StatelessWidget {
           runSpacing: 8,
           children: [
             FilledButton.icon(
+              key: const Key('ler-cartao'),
+              style: FilledButton.styleFrom(
+                backgroundColor: theme.colorScheme.tertiary,
+                foregroundColor: theme.colorScheme.onTertiary,
+              ),
               onPressed: () => _scan(context),
               icon: const Icon(Icons.qr_code_scanner),
               label: const Text('Ler cartão'),
@@ -154,18 +169,44 @@ class NetworkingPage extends StatelessWidget {
           )
         else
           for (final contact in state.contacts)
-            Padding(
-              padding: const EdgeInsets.only(bottom: 12),
-              child: Card(
-                child: ListTile(
-                  leading: CircleAvatar(child: Text(contact.initials)),
-                  title: Text(contact.name),
-                  subtitle: Text(_details(contact).join('\n')),
-                  trailing: IconButton(
-                    tooltip: 'Remover ${contact.name}',
-                    icon: const Icon(Icons.delete_outline),
-                    onPressed: () => _remove(context, contact),
-                  ),
+            DecoratedBox(
+              key: ValueKey('contato-${contact.email}'),
+              decoration: BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(color: theme.colorScheme.outlineVariant),
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CircleAvatar(child: Text(contact.initials)),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            contact.name,
+                            style: theme.textTheme.titleMedium,
+                          ),
+                          for (final line in _details(contact))
+                            Text(
+                              line,
+                              style: theme.textTheme.bodySmall?.copyWith(
+                                color: theme.colorScheme.onSurfaceVariant,
+                              ),
+                            ),
+                        ],
+                      ),
+                    ),
+                    IconButton(
+                      tooltip: 'Remover ${contact.name}',
+                      icon: const Icon(Icons.delete_outline),
+                      onPressed: () => _remove(context, contact),
+                    ),
+                  ],
                 ),
               ),
             ),
