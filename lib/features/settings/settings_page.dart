@@ -3,6 +3,7 @@ import 'package:material_ui/material_ui.dart';
 import '../../core/app_state.dart';
 import '../../core/validators.dart';
 import '../../models/user_profile.dart';
+import '../../widgets/download_app_section.dart';
 import '../../widgets/page_body.dart';
 
 /// Configurações da conta: dados do cartão, aparência e saída.
@@ -151,7 +152,8 @@ class _SettingsPageState extends State<SettingsPage> {
             value: state.darkMode,
             onChanged: state.setDarkMode,
           ),
-          const SizedBox(height: 16),
+          const Divider(height: 40),
+          const DownloadAppSection(),
           OutlinedButton.icon(
             onPressed: _signOut,
             icon: const Icon(Icons.logout),
