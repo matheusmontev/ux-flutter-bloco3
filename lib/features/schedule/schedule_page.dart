@@ -7,7 +7,7 @@ import '../../data/mock_data.dart';
 import '../../models/activity.dart';
 import '../../widgets/agenda_item.dart';
 import '../../widgets/empty_state.dart';
-import '../../widgets/page_body.dart';
+import '../../widgets/two_pane.dart';
 import 'activity_detail_page.dart';
 
 /// Programação com filtros por dia, turno, tema e busca.
@@ -50,8 +50,9 @@ class _SchedulePageState extends State<SchedulePage> {
     final days = {for (final a in activities) a.day}.toList()..sort();
     final themes = {for (final a in activities) a.theme}.toList()..sort();
 
-    return PageBody(
-      children: [
+    return TwoPane(
+      sideWidth: 360,
+      side: [
         TextField(
           key: const Key('search'),
           controller: _search,
@@ -103,6 +104,8 @@ class _SchedulePageState extends State<SchedulePage> {
           ],
         ),
         const SizedBox(height: 8),
+      ],
+      main: [
         if (results.isEmpty)
           EmptyState(
             icon: Icons.event_busy,
