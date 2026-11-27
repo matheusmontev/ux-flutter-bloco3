@@ -5,7 +5,9 @@ library;
 import 'package:eventos_academicos/app.dart';
 import 'package:eventos_academicos/core/app_state.dart';
 import 'package:eventos_academicos/core/certificate.dart';
+import 'package:eventos_academicos/core/codes.dart';
 import 'package:eventos_academicos/core/formatters.dart';
+import 'package:eventos_academicos/features/checkin/check_in_page.dart';
 import 'package:eventos_academicos/models/activity.dart';
 import 'package:eventos_academicos/models/event.dart';
 import 'package:eventos_academicos/models/user_profile.dart';
@@ -52,6 +54,39 @@ void main() {
     expect(event.lastDay, DateTime(2027, 4, 2));
     expect(event.findActivity('b02')?.title, 'Atividade b02');
     expect(event.findActivity('x'), isNull);
+  });
+
+  test('um id com maiúsculas é encontrado pelo código lido', () async {
+    final event = Event(
+      name: 'Jornada de Teste',
+      place: 'Sala de teste',
+      activities: [_activity('B01', DateTime(2027, 3, 31, 14))],
+    );
+    SharedPreferences.setMockInitialValues({});
+    final state = AppState(await SharedPreferences.getInstance(), event: event);
+
+    final result = await state.checkIn(checkInCode('B01'));
+
+    expect(result.status, CheckInStatus.success);
+    expect(state.hasAttended('B01'), isTrue);
+  });
+
+  testWidgets('o exemplo de código usa uma atividade do evento', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues({});
+    final state = AppState(
+      await SharedPreferences.getInstance(),
+      event: _event(),
+    );
+    await tester.pumpWidget(
+      AppScope(
+        state: state,
+        child: const MaterialApp(home: CheckInPage()),
+      ),
+    );
+
+    expect(find.text('EVENTO:b01'), findsOneWidget);
   });
 
   test('o período por extenso cobre um ou dois meses', () {

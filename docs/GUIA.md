@@ -58,7 +58,7 @@ No iPhone não há APK: o app é adicionado à tela de início pelo Safari.
 lib/
   main.dart        inicialização
   app.dart         tema e estado global
-  models/          Activity e UserProfile
+  models/          Activity, Event e UserProfile
   data/            dados simulados do evento fictício
   core/            estado, regras, validações, códigos QR e tema
   features/        uma pasta por área
@@ -72,6 +72,7 @@ lib/
 ## Decisões de implementação
 
 - **Estado:** um `AppState` (`ChangeNotifier`) é entregue às telas por um `InheritedNotifier`, o `AppScope`. Estado que só interessa a uma tela, como os filtros, fica nela.
+- **Evento:** `main.dart` entrega o evento ao `AppState`. O `Event` ordena as atividades por horário e informa período, dias e temas às telas.
 - **Regras separadas das telas:** filtros, códigos, validações e certificado ficam em `core/` e são testados sem interface.
 - **Persistência:** `shared_preferences` guarda perfil, sessão, presenças, contatos e tema no aparelho. Se os dados estiverem corrompidos, o app volta ao estado inicial.
 - **Navegação:** barra inferior em telas estreitas e barra lateral a partir de 840 px.
@@ -86,6 +87,7 @@ lib/
 | `test/widget_test.dart` | Login, cadastro, estado vazio, check-in até o certificado, saída e layout em 320, 390 e 1280 px |
 | `test/regras_dominio_test.dart`, `test/names_test.dart` | Comparação de e-mails, iniciais e textos |
 | `test/agenda_test.dart`, `test/hours_chart_test.dart`, `test/ticket_test.dart`, `test/componentes_test.dart` | Componentes: agenda, gráfico de horas, ingresso e itens compartilhados |
+| `test/evento_test.dart` | Ordem, período, busca por id e telas com outro evento |
 | `test/abas_test.dart`, `test/convencoes_telas_test.dart` | Navegação por abas, leitor de QR Code e telas ao entrar e sair |
 | `test/desktop_*_test.dart`, `test/layout_largura_test.dart` | Layout no computador e na passagem de uma para duas colunas |
 | `test/redesign_*_test.dart`, `test/profile_test.dart` | Telas, perfil e edição |

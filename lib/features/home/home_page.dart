@@ -32,7 +32,7 @@ class HomePage extends StatelessWidget {
     final upcoming = state.upcoming(limit: 4);
     final next = upcoming.isEmpty ? null : upcoming.first;
     final later = groupByDay(upcoming.skip(1));
-    final firstName = state.profile?.name.trim().split(' ').first ?? '';
+    final firstName = state.sessionProfile.name.trim().split(' ').first;
 
     return TwoPane(
       sideWidth: 420,

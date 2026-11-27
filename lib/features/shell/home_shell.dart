@@ -29,7 +29,7 @@ class _HomeShellState extends State<HomeShell> {
     final wide = width >= 840;
     // Em telas de computador o menu mostra os nomes ao lado dos ícones.
     final extended = width >= 1200;
-    // As abas que levam a outras abas são criadas aqui.
+    // As abas que levam a outras recebem aqui a forma de abri-las.
     final body = switch (_tab) {
       AppTab.home => HomePage(onOpenTab: _select),
       AppTab.schedule => const SchedulePage(),
