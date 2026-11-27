@@ -95,6 +95,7 @@ void main() {
   testWidgets('código digitado inválido mostra aviso', (tester) async {
     await _pumpApp(tester);
 
+    await _tap(tester, _tab('Programação'));
     await _tap(tester, find.byType(FloatingActionButton));
     await tester.enterText(find.byKey(const Key('checkin-code')), 'errado');
     await _tap(tester, find.text('Confirmar código'));
