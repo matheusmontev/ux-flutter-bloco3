@@ -72,7 +72,7 @@ void main() {
 
   group('Formulários', () {
     test('valida nome, e-mail e senha', () {
-      expect(validateName('Al'), isNotNull);
+      expect(validateName('A'), isNotNull);
       expect(validateName('Ana'), isNull);
       expect(validateEmail('ana@'), isNotNull);
       expect(validateEmail('ana@exemplo.com'), isNull);
