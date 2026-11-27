@@ -35,11 +35,14 @@ A cada pull request, o GitHub Actions executa a formatação de `lib`, a anális
 
 ## Publicar na Vercel
 
-A publicação é manual: o build é feito no computador e o resultado é enviado. É preciso ter o Node.js e acesso ao projeto na Vercel.
+O projeto da Vercel está ligado ao repositório no GitHub:
 
-```bash
-sh tool/publicar.sh
-```
+- cada merge na `main` atualiza https://ux-flutter-bloco3.vercel.app;
+- envios para outros branches geram uma prévia, sem alterar o site principal.
+
+A Vercel executa `tool/vercel_build.sh`, que instala o Flutter na mesma versão do GitHub Actions, roda os testes e gera a versão web. Se um teste falhar, a publicação é interrompida e o site continua na versão anterior. O andamento aparece nas verificações do commit no GitHub.
+
+O script `tool/publicar.sh` fica como alternativa manual.
 
 ## Estrutura do código
 
