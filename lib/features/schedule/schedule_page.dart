@@ -5,7 +5,7 @@ import '../../core/formatters.dart';
 import '../../core/schedule_filter.dart';
 import '../../data/mock_data.dart';
 import '../../models/activity.dart';
-import '../../widgets/activity_card.dart';
+import '../../widgets/agenda_item.dart';
 import '../../widgets/empty_state.dart';
 import '../../widgets/page_body.dart';
 import 'activity_detail_page.dart';
@@ -114,17 +114,33 @@ class _SchedulePageState extends State<SchedulePage> {
             ),
           )
         else
-          for (final activity in results)
-            ActivityCard(
-              activity: activity,
-              attended: state.hasAttended(activity.id),
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute<void>(
-                  builder: (_) => ActivityDetailPage(activity: activity),
+          for (final MapEntry(key: day, value: items) in groupByDay(
+            results,
+          ).entries) ...[
+            Padding(
+              padding: const EdgeInsets.only(top: 16, bottom: 4),
+              child: Semantics(
+                header: true,
+                child: Text(
+                  formatDayLong(day),
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
               ),
             ),
+            const Divider(),
+            for (final activity in items)
+              AgendaItem(
+                key: ValueKey('agenda-${activity.id}'),
+                activity: activity,
+                attended: state.hasAttended(activity.id),
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (_) => ActivityDetailPage(activity: activity),
+                  ),
+                ),
+              ),
+          ],
       ],
     );
   }

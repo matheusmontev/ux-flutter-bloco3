@@ -37,3 +37,13 @@ class ScheduleFilter {
     return text;
   }
 }
+
+/// Agrupa as atividades por dia, com dias e horários em ordem.
+Map<DateTime, List<Activity>> groupByDay(Iterable<Activity> source) {
+  final sorted = source.toList()..sort((a, b) => a.start.compareTo(b.start));
+  final groups = <DateTime, List<Activity>>{};
+  for (final activity in sorted) {
+    groups.putIfAbsent(activity.day, () => []).add(activity);
+  }
+  return groups;
+}
