@@ -78,7 +78,8 @@ class _HomeShellState extends State<HomeShell> {
           ),
         ],
       ),
-      floatingActionButton: _index <= 1
+      // No início, o próprio ingresso já traz o check-in.
+      floatingActionButton: _index == 1
           ? FloatingActionButton.extended(
               onPressed: () => Navigator.push(
                 context,
