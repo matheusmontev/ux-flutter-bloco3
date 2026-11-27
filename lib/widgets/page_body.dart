@@ -14,7 +14,7 @@ class PageBody extends StatelessWidget {
         final extra = (constraints.maxWidth - maxWidth) / 2;
         final side = extra > 16 ? extra : 16.0;
         return ListView(
-          padding: EdgeInsets.fromLTRB(side, 16, side, 32),
+          padding: EdgeInsets.fromLTRB(side, 16, side, 96),
           children: children,
         );
       },

@@ -5,7 +5,7 @@ class ScheduleFilter {
   const ScheduleFilter({this.day, this.period, this.theme, this.query = ''});
 
   final DateTime? day;
-  final DayPeriod? period;
+  final Shift? period;
   final String? theme;
   final String query;
 
@@ -17,7 +17,7 @@ class ScheduleFilter {
     final term = _normalize(query);
     final result = source.where((a) {
       if (day != null && a.day != day) return false;
-      if (period != null && a.period != period) return false;
+      if (period != null && a.shift != period) return false;
       if (theme != null && a.theme != theme) return false;
       if (term.isEmpty) return true;
       return _normalize('${a.title} ${a.speaker} ${a.room}').contains(term);

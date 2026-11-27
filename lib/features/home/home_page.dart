@@ -6,6 +6,7 @@ import '../../data/mock_data.dart';
 import '../../widgets/activity_card.dart';
 import '../../widgets/empty_state.dart';
 import '../../widgets/page_body.dart';
+import '../schedule/activity_detail_page.dart';
 
 /// Painel inicial: evento, resumo do participante e próximas atividades.
 class HomePage extends StatelessWidget {
@@ -83,7 +84,16 @@ class HomePage extends StatelessWidget {
             message: 'Você registrou presença em todas as atividades.',
           )
         else
-          for (final activity in upcoming) ActivityCard(activity: activity),
+          for (final activity in upcoming)
+            ActivityCard(
+              activity: activity,
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute<void>(
+                  builder: (_) => ActivityDetailPage(activity: activity),
+                ),
+              ),
+            ),
         OutlinedButton(
           onPressed: () => onOpenTab(1),
           child: const Text('Ver programação completa'),

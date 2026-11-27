@@ -1,10 +1,10 @@
 /// Turno de uma atividade, usado no filtro de horário.
-enum DayPeriod {
+enum Shift {
   morning('Manhã'),
   afternoon('Tarde'),
   evening('Noite');
 
-  const DayPeriod(this.label);
+  const Shift(this.label);
 
   final String label;
 }
@@ -37,9 +37,9 @@ class Activity {
 
   DateTime get day => DateTime(start.year, start.month, start.day);
 
-  DayPeriod get period {
-    if (start.hour < 12) return DayPeriod.morning;
-    if (start.hour < 18) return DayPeriod.afternoon;
-    return DayPeriod.evening;
+  Shift get shift {
+    if (start.hour < 12) return Shift.morning;
+    if (start.hour < 18) return Shift.afternoon;
+    return Shift.evening;
   }
 }
