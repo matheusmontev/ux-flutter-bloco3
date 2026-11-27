@@ -16,7 +16,7 @@ jobs:
           flutter-version: 3.50.1
           cache: true
       - run: flutter pub get
-      - run: dart format --output=none --set-exit-if-changed lib
+      - run: dart format --output=none --set-exit-if-changed lib test
       - run: flutter analyze
       - name: Testes
         if: hashFiles('test/**/*_test.dart') != ''
