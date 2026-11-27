@@ -27,8 +27,6 @@ const _months = [
   'dezembro',
 ];
 
-String formatMonthLong(DateTime date) => _months[date.month - 1];
-
 String formatDayLong(DateTime date) =>
     '${_longWeekdays[date.weekday - 1]}, ${date.day} de '
     '${_months[date.month - 1]}';
@@ -52,3 +50,5 @@ String formatHours(Duration duration) {
   if (minutes == 0) return '${hours}h';
   return '${hours}h${_two(minutes)}';
 }
+
+String formatMonthLong(DateTime date) => _months[date.month - 1];
