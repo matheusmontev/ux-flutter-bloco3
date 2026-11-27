@@ -47,6 +47,12 @@ ColorScheme _colors(Brightness brightness) {
   );
 }
 
+/// Botão âmbar, reservado à ação principal de uma tela, como o check-in.
+ButtonStyle accentButtonStyle(ColorScheme colors) => FilledButton.styleFrom(
+  backgroundColor: colors.tertiary,
+  foregroundColor: colors.onTertiary,
+);
+
 ThemeData buildTheme(Brightness brightness) {
   final colors = _colors(brightness);
   return ThemeData(

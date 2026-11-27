@@ -43,6 +43,13 @@ class UserProfile {
 
   String get initials => initialsOf(name);
 
+  /// Dados que a pessoa pode deixar em branco, na ordem em que são exibidos.
+  List<({String label, String value})> get optionalDetails => [
+    (label: 'Curso ou área', value: course),
+    (label: 'Instituição', value: institution),
+    (label: 'Link profissional', value: link),
+  ];
+
   /// Primeira letra do primeiro e do último nome, sem contar sufixos.
   /// Usa caracteres completos, para não cortar um emoji ao meio.
   static String initialsOf(String name) {

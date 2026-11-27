@@ -27,6 +27,8 @@ const _months = [
   'dezembro',
 ];
 
+String formatDayNumber(DateTime date) => _two(date.day);
+
 String formatMonthShort(DateTime date) =>
     _months[date.month - 1].substring(0, 3);
 

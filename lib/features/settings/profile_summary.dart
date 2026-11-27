@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 import '../../models/user_profile.dart';
+import '../../widgets/badge_avatar.dart';
 import '../../widgets/badge_card.dart';
 
 /// Perfil somente para leitura, com o acesso à edição.
@@ -25,9 +26,8 @@ class ProfileSummary extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _Detail(label: 'Curso ou área', value: profile.course),
-          _Detail(label: 'Instituição', value: profile.institution),
-          _Detail(label: 'Link profissional', value: profile.link),
+          for (final (:label, :value) in profile.optionalDetails)
+            _Detail(label: label, value: value),
           const SizedBox(height: 8),
           FilledButton.icon(
             onPressed: onEdit,
@@ -58,15 +58,7 @@ class ProfileBadgeHeader extends StatelessWidget {
     final theme = Theme.of(context);
     return Column(
       children: [
-        CircleAvatar(
-          radius: 28,
-          backgroundColor: theme.colorScheme.onPrimary,
-          foregroundColor: theme.colorScheme.primary,
-          child: Text(
-            initials,
-            style: const TextStyle(fontWeight: FontWeight.w700),
-          ),
-        ),
+        BadgeAvatar(initials: initials, radius: 28),
         const SizedBox(height: 8),
         Text(
           name,

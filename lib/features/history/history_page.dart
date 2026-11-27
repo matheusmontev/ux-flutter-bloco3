@@ -147,7 +147,7 @@ class _CertificateRow extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(
-                      activity.start.day.toString().padLeft(2, '0'),
+                      formatDayNumber(activity.start),
                       style: theme.textTheme.titleLarge?.copyWith(
                         color: colors.onPrimaryContainer,
                         fontWeight: FontWeight.w700,
