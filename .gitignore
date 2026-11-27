@@ -17,3 +17,6 @@ Thumbs.db
 .packages
 build/
 coverage/
+
+# Publicação
+.vercel/

@@ -1,0 +1,24 @@
+name: Verificação
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  flutter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: 3.50.1
+          cache: true
+      - run: flutter pub get
+      - run: dart format --output=none --set-exit-if-changed lib
+      - run: flutter analyze
+      - name: Testes
+        if: hashFiles('test/**/*_test.dart') != ''
+        run: flutter test
+      - run: flutter build web --release
