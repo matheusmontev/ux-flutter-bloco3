@@ -5,7 +5,6 @@ import '../../core/app_state.dart';
 import '../../core/formatters.dart';
 import '../../core/schedule_filter.dart';
 import '../../core/validators.dart';
-import '../../data/mock_data.dart';
 import '../../widgets/app_logo.dart';
 import '../../widgets/two_pane.dart';
 
@@ -174,8 +173,7 @@ class _EventTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final color = theme.colorScheme.onPrimary;
-    final first = activities.first.start;
-    final last = activities.last.start;
+    final event = AppScope.of(context).event;
     return DefaultTextStyle.merge(
       style: TextStyle(color: color),
       child: Column(
@@ -208,7 +206,7 @@ class _EventTitle extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           Text(
-            eventName,
+            event.name,
             style: theme.textTheme.headlineMedium?.copyWith(
               color: color,
               fontWeight: FontWeight.w700,
@@ -216,10 +214,10 @@ class _EventTitle extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           Text(
-            '${first.day} a ${last.day} de ${formatMonthLong(last)}',
+            formatPeriodLong(event.firstDay, event.lastDay),
             style: theme.textTheme.titleMedium?.copyWith(color: color),
           ),
-          const Text(eventPlace),
+          Text(event.place),
         ],
       ),
     );
@@ -266,7 +264,7 @@ class _BrandPanel extends StatelessWidget {
                 const _EventTitle(),
                 const SizedBox(height: 32),
                 for (final MapEntry(key: day, value: items) in groupByDay(
-                  activities,
+                  AppScope.of(context).event.activities,
                 ).entries) ...[
                   Divider(color: color.withValues(alpha: 0.35)),
                   Padding(

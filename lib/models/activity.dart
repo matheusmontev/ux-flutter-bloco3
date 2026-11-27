@@ -9,6 +9,9 @@ enum Shift {
   final String label;
 }
 
+/// Ordem de horário das atividades.
+int byStart(Activity a, Activity b) => a.start.compareTo(b.start);
+
 /// Uma atividade da programação do evento.
 class Activity {
   const Activity({

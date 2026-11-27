@@ -39,8 +39,8 @@ void main() {
     final activity = activities.first;
 
     expect(
-      certificateShareText(_ana, activity),
-      '${certificateText(_ana, activity)}\n'
+      certificateShareText(_ana, activity, demoEvent),
+      '${certificateText(_ana, activity, demoEvent)}\n'
       'Código: ${certificateCode(_ana, activity)}\n'
       '$certificateDisclaimer',
     );

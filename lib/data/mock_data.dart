@@ -1,4 +1,5 @@
 import '../models/activity.dart';
+import '../models/event.dart';
 import '../models/user_profile.dart';
 
 /// Dados simulados de um evento fictício. O projeto não usa servidor.
@@ -121,6 +122,12 @@ final List<Activity> activities = [
     description: 'Troca de contatos entre participantes e convidados.',
   ),
 ];
+
+final demoEvent = Event(
+  name: eventName,
+  place: eventPlace,
+  activities: activities,
+);
 
 /// Contato fictício para demonstrar a troca de cartões.
 const sampleContact = UserProfile(

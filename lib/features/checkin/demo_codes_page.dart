@@ -1,8 +1,8 @@
 import 'package:material_ui/material_ui.dart';
 
+import '../../core/app_state.dart';
 import '../../core/codes.dart';
 import '../../core/formatters.dart';
-import '../../data/mock_data.dart';
 import '../../widgets/page_body.dart';
 import '../../widgets/qr_box.dart';
 
@@ -21,7 +21,7 @@ class DemoCodesPage extends StatelessWidget {
             'Abra esta tela em um aparelho e leia o QR Code com outro.',
           ),
           const SizedBox(height: 12),
-          for (final activity in activities)
+          for (final activity in AppScope.of(context).event.activities)
             Card(
               child: ExpansionTile(
                 title: Text(activity.title),
