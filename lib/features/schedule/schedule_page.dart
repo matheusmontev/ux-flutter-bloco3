@@ -24,6 +24,9 @@ class _SchedulePageState extends State<SchedulePage> {
   Shift? _period;
   String? _theme;
 
+  /// No celular, turno e tema só aparecem quando pedidos.
+  bool _showFilters = false;
+
   @override
   void dispose() {
     _search.dispose();
@@ -50,6 +53,9 @@ class _SchedulePageState extends State<SchedulePage> {
     final days = {for (final a in activities) a.day}.toList()..sort();
     final themes = {for (final a in activities) a.theme}.toList()..sort();
 
+    final compact = MediaQuery.sizeOf(context).width < TwoPane.breakpoint;
+    final extra = (_period == null ? 0 : 1) + (_theme == null ? 0 : 1);
+
     return TwoPane(
       sideWidth: 360,
       side: [
@@ -63,37 +69,65 @@ class _SchedulePageState extends State<SchedulePage> {
           onChanged: (_) => setState(() {}),
         ),
         const SizedBox(height: 12),
-        _FilterRow<DateTime>(
-          title: 'Dia',
-          options: days,
-          selected: _day,
-          label: formatDayShort,
-          onChanged: (value) => setState(() => _day = value),
-        ),
-        _FilterRow<Shift>(
-          title: 'Turno',
-          options: Shift.values,
-          selected: _period,
-          label: (period) => period.label,
-          onChanged: (value) => setState(() => _period = value),
-        ),
-        _FilterRow<String>(
-          title: 'Tema',
-          options: themes,
-          selected: _theme,
-          label: (theme) => theme,
-          onChanged: (value) => setState(() => _theme = value),
-        ),
-        Row(
+        if (compact)
+          // Os dias ficam em uma linha, para a agenda aparecer logo.
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                for (final day in days)
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8),
+                    child: FilterChip(
+                      label: Text(formatDayShort(day)),
+                      selected: _day == day,
+                      onSelected: (value) =>
+                          setState(() => _day = value ? day : null),
+                    ),
+                  ),
+              ],
+            ),
+          )
+        else
+          _FilterRow<DateTime>(
+            title: 'Dia',
+            options: days,
+            selected: _day,
+            label: formatDayShort,
+            onChanged: (value) => setState(() => _day = value),
+          ),
+        if (!compact || _showFilters) ...[
+          _FilterRow<Shift>(
+            title: 'Turno',
+            options: Shift.values,
+            selected: _period,
+            label: (period) => period.label,
+            onChanged: (value) => setState(() => _period = value),
+          ),
+          _FilterRow<String>(
+            title: 'Tema',
+            options: themes,
+            selected: _theme,
+            label: (theme) => theme,
+            onChanged: (value) => setState(() => _theme = value),
+          ),
+        ],
+        Wrap(
+          alignment: WrapAlignment.spaceBetween,
+          crossAxisAlignment: WrapCrossAlignment.center,
           children: [
-            Expanded(
-              child: Semantics(
-                liveRegion: true,
-                child: Text(
-                  results.length == 1
-                      ? '1 atividade'
-                      : '${results.length} atividades',
-                ),
+            if (compact)
+              TextButton.icon(
+                onPressed: () => setState(() => _showFilters = !_showFilters),
+                icon: Icon(_showFilters ? Icons.expand_less : Icons.tune),
+                label: Text(extra == 0 ? 'Filtros' : 'Filtros ($extra)'),
+              ),
+            Semantics(
+              liveRegion: true,
+              child: Text(
+                results.length == 1
+                    ? '1 atividade'
+                    : '${results.length} atividades',
               ),
             ),
             if (!filter.isEmpty)
@@ -103,7 +137,6 @@ class _SchedulePageState extends State<SchedulePage> {
               ),
           ],
         ),
-        const SizedBox(height: 8),
       ],
       main: [
         if (results.isEmpty)
@@ -171,7 +204,10 @@ class _FilterRow<T> extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 8),
       child: Row(
         children: [
-          SizedBox(width: 52, child: Text(title)),
+          SizedBox(
+            width: MediaQuery.textScalerOf(context).scale(52),
+            child: Text(title),
+          ),
           Expanded(
             child: Wrap(
               spacing: 8,
