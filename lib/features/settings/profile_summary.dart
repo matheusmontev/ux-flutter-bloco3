@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 import '../../models/user_profile.dart';
+import '../../widgets/badge_card.dart';
 
 /// Perfil somente para leitura, com o acesso à edição.
 class ProfileSummary extends StatelessWidget {
@@ -15,36 +16,67 @@ class ProfileSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Center(
-              child: CircleAvatar(radius: 32, child: Text(profile.initials)),
-            ),
-            const SizedBox(height: 12),
-            Text(
-              profile.name,
-              style: theme.textTheme.titleLarge,
-              textAlign: TextAlign.center,
-            ),
-            Text(profile.email, textAlign: TextAlign.center),
-            const SizedBox(height: 16),
-            _Detail(label: 'Curso ou área', value: profile.course),
-            _Detail(label: 'Instituição', value: profile.institution),
-            _Detail(label: 'Link profissional', value: profile.link),
-            const SizedBox(height: 8),
-            FilledButton.icon(
-              onPressed: onEdit,
-              icon: const Icon(Icons.edit_outlined),
-              label: const Text('Editar perfil'),
-            ),
-          ],
-        ),
+    return BadgeCard(
+      header: ProfileBadgeHeader(
+        initials: profile.initials,
+        name: profile.name,
+        email: profile.email,
       ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          _Detail(label: 'Curso ou área', value: profile.course),
+          _Detail(label: 'Instituição', value: profile.institution),
+          _Detail(label: 'Link profissional', value: profile.link),
+          const SizedBox(height: 8),
+          FilledButton.icon(
+            onPressed: onEdit,
+            icon: const Icon(Icons.edit_outlined),
+            label: const Text('Editar perfil'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Iniciais, nome e e-mail na faixa do crachá.
+class ProfileBadgeHeader extends StatelessWidget {
+  const ProfileBadgeHeader({
+    super.key,
+    required this.initials,
+    required this.name,
+    required this.email,
+  });
+
+  final String initials;
+  final String name;
+  final String email;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Column(
+      children: [
+        CircleAvatar(
+          radius: 28,
+          backgroundColor: theme.colorScheme.onPrimary,
+          foregroundColor: theme.colorScheme.primary,
+          child: Text(
+            initials,
+            style: const TextStyle(fontWeight: FontWeight.w700),
+          ),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          name,
+          style: theme.textTheme.titleLarge?.copyWith(
+            color: theme.colorScheme.onPrimary,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        Text(email),
+      ],
     );
   }
 }
