@@ -1,6 +1,6 @@
 import 'package:eventos_academicos/core/theme.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:material_ui/material_ui.dart';
+import 'package:flutter/services.dart';
 
 /// Razão de contraste da WCAG entre duas cores opacas.
 double _contrast(Color a, Color b) {
