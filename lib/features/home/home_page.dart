@@ -5,7 +5,7 @@ import '../../core/formatters.dart';
 import '../../data/mock_data.dart';
 import '../../widgets/activity_card.dart';
 import '../../widgets/empty_state.dart';
-import '../../widgets/page_body.dart';
+import '../../widgets/two_pane.dart';
 import '../schedule/activity_detail_page.dart';
 
 /// Painel inicial: evento, resumo do participante e próximas atividades.
@@ -22,8 +22,9 @@ class HomePage extends StatelessWidget {
     final upcoming = state.upcoming();
     final firstName = state.profile?.name.split(' ').first ?? '';
 
-    return PageBody(
-      children: [
+    return TwoPane(
+      sideWidth: 420,
+      side: [
         Text('Olá, $firstName', style: theme.textTheme.headlineSmall),
         const SizedBox(height: 16),
         Card(
@@ -75,6 +76,8 @@ class HomePage extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 24),
+      ],
+      main: [
         Text('Próximas atividades', style: theme.textTheme.titleMedium),
         const SizedBox(height: 12),
         if (upcoming.isEmpty)
