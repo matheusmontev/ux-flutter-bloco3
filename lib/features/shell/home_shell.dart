@@ -1,8 +1,9 @@
 import 'package:material_ui/material_ui.dart';
 
-import '../../widgets/empty_state.dart';
 import '../checkin/check_in_page.dart';
+import '../history/history_page.dart';
 import '../home/home_page.dart';
+import '../networking/networking_page.dart';
 import '../schedule/schedule_page.dart';
 import '../settings/settings_page.dart';
 
@@ -15,12 +16,6 @@ class _Destination {
   final Widget page;
 }
 
-const _pending = EmptyState(
-  icon: Icons.construction,
-  title: 'Em construção',
-  message: 'Esta área ainda será implementada.',
-);
-
 const _destinations = [
   _Destination('Início', Icons.home_outlined, Icons.home, SizedBox()),
   _Destination(
@@ -29,8 +24,18 @@ const _destinations = [
     Icons.event_note,
     SchedulePage(),
   ),
-  _Destination('Presenças', Icons.verified_outlined, Icons.verified, _pending),
-  _Destination('Networking', Icons.people_outline, Icons.people, _pending),
+  _Destination(
+    'Presenças',
+    Icons.verified_outlined,
+    Icons.verified,
+    SizedBox(),
+  ),
+  _Destination(
+    'Networking',
+    Icons.people_outline,
+    Icons.people,
+    NetworkingPage(),
+  ),
 ];
 
 /// Navegação principal: barra inferior no celular, lateral em telas largas.
@@ -49,10 +54,12 @@ class _HomeShellState extends State<HomeShell> {
   @override
   Widget build(BuildContext context) {
     final wide = MediaQuery.sizeOf(context).width >= 840;
-    // A aba inicial precisa trocar de aba, por isso é criada aqui.
-    final body = _index == 0
-        ? HomePage(onOpenTab: _select)
-        : _destinations[_index].page;
+    // As abas que levam a outras abas são criadas aqui.
+    final body = switch (_index) {
+      0 => HomePage(onOpenTab: _select),
+      2 => HistoryPage(onOpenSchedule: () => _select(1)),
+      _ => _destinations[_index].page,
+    };
 
     return Scaffold(
       appBar: AppBar(
