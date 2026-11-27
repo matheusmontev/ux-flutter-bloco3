@@ -1,0 +1,19 @@
+# Arquivos locais (não versionar)
+*.local.*
+*.local/
+.env
+.env.*
+
+# Sistema e editor
+.DS_Store
+Thumbs.db
+.idea/
+*.iml
+
+# Flutter / Dart
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+build/
+coverage/
