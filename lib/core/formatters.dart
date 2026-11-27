@@ -27,6 +27,9 @@ const _months = [
   'dezembro',
 ];
 
+String formatMonthShort(DateTime date) =>
+    _months[date.month - 1].substring(0, 3);
+
 String formatDayLong(DateTime date) =>
     '${_longWeekdays[date.weekday - 1]}, ${date.day} de '
     '${_months[date.month - 1]}';

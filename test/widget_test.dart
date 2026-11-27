@@ -88,7 +88,7 @@ void main() {
     await _tap(tester, _tab('Presenças'));
     await _tap(tester, find.text('Abertura: tecnologia e pessoas'));
 
-    expect(find.text('CERTIFICADO DE PARTICIPAÇÃO'), findsOneWidget);
+    expect(find.text('Certificado de participação'), findsOneWidget);
     expect(find.textContaining('Ana Lima'), findsOneWidget);
   });
 

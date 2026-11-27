@@ -33,49 +33,62 @@ class CertificatePage extends StatelessWidget {
       body: PageBody(
         maxWidth: 640,
         children: [
-          Container(
-            padding: const EdgeInsets.all(6),
-            decoration: BoxDecoration(
-              border: Border.all(color: theme.colorScheme.primary, width: 3),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 32),
-              decoration: BoxDecoration(
-                border: Border.all(color: theme.colorScheme.primary),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Column(
-                children: [
-                  Icon(
-                    Icons.workspace_premium_outlined,
-                    size: 48,
-                    color: theme.colorScheme.primary,
+          Card(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                ColoredBox(
+                  color: theme.colorScheme.primary,
+                  child: Padding(
+                    padding: const EdgeInsets.all(24),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Icon(
+                          Icons.workspace_premium_outlined,
+                          size: 40,
+                          color: theme.colorScheme.onPrimary,
+                        ),
+                        const SizedBox(height: 12),
+                        Text(
+                          'Certificado de participação',
+                          style: theme.textTheme.headlineSmall?.copyWith(
+                            color: theme.colorScheme.onPrimary,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  const SizedBox(height: 12),
-                  Text(
-                    'CERTIFICADO DE PARTICIPAÇÃO',
-                    style: theme.textTheme.titleLarge,
-                    textAlign: TextAlign.center,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(24),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        text,
+                        style: theme.textTheme.titleMedium?.copyWith(
+                          height: 1.5,
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      const Text(eventPlace),
+                      const Divider(height: 32),
+                      Text(
+                        'Código: $code',
+                        key: const Key('cert-codigo'),
+                        style: const TextStyle(fontWeight: FontWeight.w700),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        'Documento de demonstração, sem validade acadêmica.',
+                        style: theme.textTheme.bodySmall,
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 24),
-                  Text(
-                    text,
-                    style: theme.textTheme.bodyLarge,
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 24),
-                  const Text(eventPlace, textAlign: TextAlign.center),
-                  const SizedBox(height: 8),
-                  Text('Código: $code', textAlign: TextAlign.center),
-                  const SizedBox(height: 16),
-                  Text(
-                    'Documento de demonstração, sem validade acadêmica.',
-                    style: theme.textTheme.bodySmall,
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
           const SizedBox(height: 20),
