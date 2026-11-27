@@ -16,6 +16,11 @@ class TwoPane extends StatelessWidget {
   static const breakpoint = 900.0;
   static const maxWidth = 1200.0;
 
+  /// Diz se há largura para duas colunas. Quem precisa adaptar o conteúdo ao
+  /// layout deve passar as mesmas restrições que o [TwoPane] recebe.
+  static bool isWide(BoxConstraints constraints) =>
+      constraints.maxWidth >= breakpoint;
+
   final List<Widget> side;
   final List<Widget> main;
   final double sideWidth;
@@ -31,7 +36,7 @@ class TwoPane extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        if (constraints.maxWidth < breakpoint) {
+        if (!isWide(constraints)) {
           return PageBody(children: [...side, ...main]);
         }
         return Center(

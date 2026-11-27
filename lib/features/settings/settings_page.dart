@@ -55,35 +55,36 @@ class SettingsPage extends StatelessWidget {
     final profile = state.profile;
     return Scaffold(
       appBar: AppBar(title: const Text('Configurações')),
-      body: TwoPane(
-        sideWidth: 420,
-        side: [
-          if (profile != null)
-            ProfileSummary(
-              profile: profile,
-              onEdit: () => _editProfile(context),
+      body: LayoutBuilder(
+        builder: (_, constraints) => TwoPane(
+          sideWidth: 420,
+          side: [
+            if (profile != null)
+              ProfileSummary(
+                profile: profile,
+                onEdit: () => _editProfile(context),
+              ),
+          ],
+          main: [
+            // No celular, separa o perfil das preferências.
+            if (!TwoPane.isWide(constraints)) const Divider(height: 40),
+            SwitchListTile(
+              contentPadding: EdgeInsets.zero,
+              title: const Text('Tema escuro'),
+              value: state.darkMode,
+              onChanged: state.setDarkMode,
             ),
-        ],
-        main: [
-          // No celular, separa o perfil das preferências.
-          if (MediaQuery.sizeOf(context).width < TwoPane.breakpoint)
             const Divider(height: 40),
-          SwitchListTile(
-            contentPadding: EdgeInsets.zero,
-            title: const Text('Tema escuro'),
-            value: state.darkMode,
-            onChanged: state.setDarkMode,
-          ),
-          const Divider(height: 40),
-          const DownloadAppSection(),
-          Text('Conta', style: Theme.of(context).textTheme.titleMedium),
-          const SizedBox(height: 12),
-          OutlinedButton.icon(
-            onPressed: () => _signOut(context),
-            icon: const Icon(Icons.logout),
-            label: const Text('Sair da conta'),
-          ),
-        ],
+            const DownloadAppSection(),
+            Text('Conta', style: Theme.of(context).textTheme.titleMedium),
+            const SizedBox(height: 12),
+            OutlinedButton.icon(
+              onPressed: () => _signOut(context),
+              icon: const Icon(Icons.logout),
+              label: const Text('Sair da conta'),
+            ),
+          ],
+        ),
       ),
     );
   }
