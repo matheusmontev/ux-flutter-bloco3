@@ -4,7 +4,8 @@ import 'package:eventos_academicos/features/settings/settings_page.dart';
 import 'package:eventos_academicos/models/user_profile.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
+import 'support/app_state.dart';
 
 Future<AppState> _openSettings(
   WidgetTester tester, {
@@ -14,8 +15,7 @@ Future<AppState> _openSettings(
   tester.view.physicalSize = size;
   addTearDown(tester.view.reset);
 
-  SharedPreferences.setMockInitialValues({});
-  final state = AppState(await SharedPreferences.getInstance());
+  final state = await newAppState();
   await state.signIn(email: 'ana@exemplo.com', name: 'Ana Lima');
   await tester.pumpWidget(
     AppScope(

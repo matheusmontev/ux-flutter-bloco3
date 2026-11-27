@@ -1,9 +1,9 @@
 import 'package:eventos_academicos/app.dart';
-import 'package:eventos_academicos/core/app_state.dart';
 import 'package:eventos_academicos/data/mock_data.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
+import 'support/app_state.dart';
 
 Future<void> _pump(
   WidgetTester tester, {
@@ -15,8 +15,7 @@ Future<void> _pump(
   tester.platformDispatcher.textScaleFactorTestValue = scale;
   addTearDown(tester.view.reset);
   addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
-  SharedPreferences.setMockInitialValues({});
-  final state = AppState(await SharedPreferences.getInstance());
+  final state = await newAppState();
   await tester.pumpWidget(EventosApp(state: state));
   await tester.pumpAndSettle();
 }

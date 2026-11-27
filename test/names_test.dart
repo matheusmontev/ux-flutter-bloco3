@@ -1,11 +1,11 @@
 import 'package:eventos_academicos/app.dart';
-import 'package:eventos_academicos/core/app_state.dart';
 import 'package:eventos_academicos/core/codes.dart';
 import 'package:eventos_academicos/core/validators.dart';
 import 'package:eventos_academicos/models/user_profile.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
+import 'support/app_state.dart';
 
 String _initials(String name) =>
     UserProfile(name: name, email: 'a@b.test').initials;
@@ -66,8 +66,7 @@ void main() {
       tester.view.devicePixelRatio = 1;
       tester.view.physicalSize = const Size(390, 844);
       addTearDown(tester.view.reset);
-      SharedPreferences.setMockInitialValues({});
-      final state = AppState(await SharedPreferences.getInstance());
+      final state = await newAppState();
       await state.signIn(email: 'fox@exemplo.com', name: '🦊 Fox');
       await state.addContact(
         cardCode(

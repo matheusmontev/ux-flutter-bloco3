@@ -1,9 +1,9 @@
 import 'package:eventos_academicos/app.dart';
-import 'package:eventos_academicos/core/app_state.dart';
 import 'package:eventos_academicos/widgets/two_pane.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
+import 'support/app_state.dart';
 
 void _size(WidgetTester tester, Size size) {
   tester.view.devicePixelRatio = 1;
@@ -24,8 +24,7 @@ Future<void> _pumpPanes(WidgetTester tester, Size size) async {
 
 Future<void> _pumpApp(WidgetTester tester, Size size) async {
   _size(tester, size);
-  SharedPreferences.setMockInitialValues({});
-  final state = AppState(await SharedPreferences.getInstance());
+  final state = await newAppState();
   await state.signIn(email: 'ana@exemplo.com', name: 'Ana Lima');
   await tester.pumpWidget(EventosApp(state: state));
   await tester.pumpAndSettle();

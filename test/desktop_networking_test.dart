@@ -3,14 +3,14 @@ import 'package:eventos_academicos/core/app_state.dart';
 import 'package:eventos_academicos/widgets/qr_box.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
+import 'support/app_state.dart';
 
 Future<AppState> _open(WidgetTester tester, Size size) async {
   tester.view.devicePixelRatio = 1;
   tester.view.physicalSize = size;
   addTearDown(tester.view.reset);
-  SharedPreferences.setMockInitialValues({});
-  final state = AppState(await SharedPreferences.getInstance());
+  final state = await newAppState();
   await state.signIn(email: 'ana@exemplo.com', name: 'Ana Lima');
   await tester.pumpWidget(EventosApp(state: state));
   await tester.pumpAndSettle();
