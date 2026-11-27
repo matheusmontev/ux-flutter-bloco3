@@ -37,10 +37,7 @@ class _CheckInPageState extends State<CheckInPage> {
   }
 
   Future<void> _scan() async {
-    final value = await Navigator.push<String>(
-      context,
-      MaterialPageRoute(builder: (_) => const ScannerPage()),
-    );
+    final value = await ScannerPage.read(context);
     if (value != null && mounted) await _register(value);
   }
 
