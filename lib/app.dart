@@ -1,5 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 
+import 'core/app_info.dart';
 import 'core/app_state.dart';
 import 'core/theme.dart';
 import 'features/shell/auth_gate.dart';
@@ -16,7 +17,7 @@ class EventosApp extends StatelessWidget {
       child: ListenableBuilder(
         listenable: state,
         builder: (context, _) => MaterialApp(
-          title: 'Eventos Acadêmicos',
+          title: appName,
           debugShowCheckedModeBanner: false,
           theme: buildTheme(Brightness.light),
           darkTheme: buildTheme(Brightness.dark),
