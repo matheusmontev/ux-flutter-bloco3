@@ -32,6 +32,11 @@ class AppState extends ChangeNotifier {
   static const _contactsKey = 'contacts';
   static const _darkKey = 'dark';
 
+  /// Descreve para quem usa a regra de troca de conta de [signIn].
+  static const accountSwitchWarning =
+      'Seus dados continuam neste aparelho. Ao entrar com outro '
+      'e-mail, presenças e contatos serão apagados.';
+
   final SharedPreferences _prefs;
   final DateTime Function() _clock;
 
@@ -75,8 +80,8 @@ class AppState extends ChangeNotifier {
   /// Entrada simulada: não há servidor e a senha não é armazenada.
   /// Ao trocar de conta, os dados da conta anterior são apagados.
   Future<void> signIn({required String email, String? name}) async {
-    final normalized = email.trim().toLowerCase();
-    if (_profile?.email != normalized) {
+    final normalized = UserProfile.normalizeEmail(email);
+    if (!(_profile?.hasEmail(normalized) ?? false)) {
       _attendance.clear();
       _contacts.clear();
       final typed = name?.trim() ?? '';
@@ -126,9 +131,10 @@ class AppState extends ChangeNotifier {
   Future<AddContactStatus> addContact(String raw) async {
     final contact = parseCardCode(raw);
     if (contact == null) return AddContactStatus.invalidCode;
-    final email = contact.email.toLowerCase();
-    if (email == _profile?.email.toLowerCase()) return AddContactStatus.ownCard;
-    if (_contacts.any((c) => c.email.toLowerCase() == email)) {
+    if (_profile?.hasEmail(contact.email) ?? false) {
+      return AddContactStatus.ownCard;
+    }
+    if (_contacts.any((c) => c.hasEmail(contact.email))) {
       return AddContactStatus.alreadyAdded;
     }
     _contacts.add(contact);
@@ -137,7 +143,7 @@ class AppState extends ChangeNotifier {
   }
 
   Future<void> removeContact(String email) async {
-    _contacts.removeWhere((c) => c.email == email);
+    _contacts.removeWhere((c) => c.hasEmail(email));
     await _save();
   }
 

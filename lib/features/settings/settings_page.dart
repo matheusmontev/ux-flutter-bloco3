@@ -28,10 +28,7 @@ class SettingsPage extends StatelessWidget {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Sair da conta?'),
-        content: const Text(
-          'Seus dados continuam neste aparelho. Ao entrar com outro '
-          'e-mail, presenças e contatos serão apagados.',
-        ),
+        content: const Text(AppState.accountSwitchWarning),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),

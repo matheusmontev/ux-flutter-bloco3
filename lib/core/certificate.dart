@@ -17,6 +17,15 @@ String certificateCode(UserProfile profile, Activity activity) {
   return '${activity.id.toUpperCase()}-$digits';
 }
 
+const certificateDisclaimer =
+    'Documento de demonstração, sem validade acadêmica.';
+
+/// O que vai para a área de transferência.
+String certificateShareText(UserProfile profile, Activity activity) =>
+    '${certificateText(profile, activity)}\n'
+    'Código: ${certificateCode(profile, activity)}\n'
+    '$certificateDisclaimer';
+
 String certificateText(UserProfile profile, Activity activity) =>
     'Certificamos que ${profile.name} participou da atividade '
     '"${activity.title}" (${activity.type.toLowerCase()}), no evento '

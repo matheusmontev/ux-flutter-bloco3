@@ -98,9 +98,9 @@ class _CheckInPageState extends State<CheckInPage> {
           TextField(
             key: const Key('checkin-code'),
             controller: _code,
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               labelText: 'Código da atividade',
-              hintText: 'EVENTO:a01',
+              hintText: checkInCode('a01'),
             ),
             autocorrect: false,
             onSubmitted: _register,

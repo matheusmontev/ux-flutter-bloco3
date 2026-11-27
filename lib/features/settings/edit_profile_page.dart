@@ -97,7 +97,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               final typed = _name.text.trim();
               return BadgeCard(
                 header: ProfileBadgeHeader(
-                  initials: UserProfile(name: typed, email: email).initials,
+                  initials: UserProfile.initialsOf(typed),
                   name: typed.isEmpty ? 'Seu nome' : typed,
                   email: email,
                 ),
